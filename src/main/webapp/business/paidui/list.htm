@@ -1,0 +1,124 @@
+##tlayout("business/layout.htm"){
+
+<div class="breadcrumbs">
+	<div class="col-xs-4 breadcrumbs_title">
+		<div id="search_div" style="height: 50px;line-height: 50px;padding-top: 7.5px;">
+			##if(exist("status")){
+				<label><a href="javascript:setAll()">全部</a></label>
+				##if(status==1){
+					<label class="cur"><a href="javascript:setStatus(1)">待叫号</a></label>
+				##}else{
+					<label><a href="javascript:setStatus(1)">待叫号</a></label>
+				##}
+				##if(status==2){
+					<label class="cur"><a href="javascript:setStatus(2)">已叫号</a></label>
+				##}else{
+					<label><a href="javascript:setStatus(2)">已叫号</a></label>
+				##}
+				##if(status==3){
+					<label class="cur"><a href="javascript:setStatus(3)">已销号</a></label>
+				##}else{
+					<label><a href="javascript:setStatus(3)">已销号</a></label>
+				##}
+				##if(status==4){
+					<label class="cur"><a href="javascript:setStatus(4)">已过号</a></label>
+				##}else{
+					<label><a href="javascript:setStatus(4)">已过号</a></label>
+				##}
+			##}else{
+				<label class="cur"><a href="javascript:setAll()">全部</a></label>
+				<label><a href="javascript:setStatus(1)">待叫号</a></label>
+				<label><a href="javascript:setStatus(2)">已叫号</a></label>
+				<label><a href="javascript:setStatus(3)">已销号</a></label>
+				<label><a href="javascript:setStatus(4)">已过号</a></label>
+			##}
+		</div>
+	</div>
+	<div class="col-xs-8 breadcrumbs_right">
+		<form action="/business/paidui/index" method="post" id="search_form">
+			<a class="btn btn-info btn-sm" href="javascript:showAlert('/business/paidui/template')">订阅消息模板</a>
+			<select style="height:35px;vertical-align: top;" name="sid">
+				<option value="">全部</option>
+				##for(_item in shop_list!){
+					<option value="${_item.id!}">${_item.title!}</option>
+				##}
+			</select>
+			<input type="text" placeholder="请输入搜索内容" name="content" value="${content!}" style="height: 35px;margin-left: 5px;" />
+			<button class="btn btn-sm" type="button" onclick="$(this).parent().submit()" style="margin-left: 5px;padding: 4px 10px;">确定</button>
+			<input name="status" value="${status!}" type="hidden" />
+		</form>
+	</div>
+</div>
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="table-responsive base_item">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>编号</th>
+							<th>门店</th>
+							<th>桌位类型</th>
+							<th>会员</th>
+							<th>取号时间</th>
+							<th>状态</th>
+							<th>操作时间</th>
+						</tr>
+					</thead>
+					<tbody>
+						##for(_item in results.list!){
+							<tr>
+								<td>${_item.code!}</td>
+								<td>${_item.shop_title!}</td>
+								<td>${_item.tables_type_title!}</td>
+								<td>
+									##if(_item.user_id!=null &&_item.user_id!=""){
+										<div><img src="${_item.user_img_url!}" style="width: 50px;" /></div>
+										<div style="margin-top: 5px;">${_item.user_name!}</div>
+									##}
+								</td>
+								<td>${_item.create_date!,dateFormat='yyyy-MM-dd HH:mm'}</td>
+								<td>
+									##if(_item.status==1){
+		                            	待叫号
+		                            ##}else if(_item.status==2){
+		                            	已叫号
+		                            ##}else if(_item.status==3){
+		                            	已销号
+		                            ##}else{
+		                            	已过号
+		                            ##}
+								</td>
+								<td>${_item.chuli_date!,dateFormat='yyyy-MM-dd HH:mm'}</td>
+							</tr>
+						##}
+					</tbody>
+				</table>
+			</div>
+			##if(totalPage>1){
+				<div class="fenye">
+					<#_pagination page="${results!}" params="status,sid,content">
+						<ul id="Pagination"></ul>
+					</#_pagination>
+				</div>
+			##}
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function(){
+	
+	$("select[name='sid']").val("${sid!}");
+});
+function setStatus(status){
+	
+	$("input[name='status']").val(status);
+	$("#search_form").submit();
+}
+function setAll(){
+	
+	$("input[name='status']").val("");
+	$("#search_form").submit();
+}
+</script>
+##}

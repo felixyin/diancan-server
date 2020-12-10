@@ -1,0 +1,105 @@
+<link rel="stylesheet" href="/business/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/business/assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/business/assets/css/ace.min.css" />
+<link rel="stylesheet" href="/business/assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="/business/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="/business/css/style.css" />
+
+<script src="/www/script/jquery.min.js"></script>
+<script src="/www/script/jquery.form.js"></script>
+
+<!-- 文件上传所需要css和js -->
+<link rel="stylesheet" href="/www/script/FileUpload/css/jquery.fileupload.css">
+<script type="text/javascript" src="/www/script/FileUpload/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="/www/script/FileUpload/vendor/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="/www/script/FileUpload/jquery.fileupload.js"></script>
+
+<div class="page-content popup">
+	<div class="page-header">
+		<h1>编辑轮播</h1>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<form class="form-horizontal" action="/business/carousel/update" method="post" id="submit_form">
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>标题</label>
+					<div class="col-xs-12">
+						<input type="text" name="title" value="${carousel.title!}" class="col-xs-10" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>关联文章</label>
+					<div class="col-xs-12 control-label">
+						<select name="article_id" class="col-xs-10">
+							##for(_item in article_list!){
+								<option value="${_item.id!}">${_item.title!}</option>
+							##}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>排序</label>
+					<div class="col-xs-12">
+						<input type="text" name="idx" value="${carousel.idx!}" class="col-xs-10" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>图片</label>
+					<div class="col-xs-12">
+						<a href="javascript:void(0);" class="file">选择图片(750 * 300)
+							<input type="file" class="autosize-transition form-control" name="image" id="uploadImg" style="overflow: hidden; word-wrap: break-word; resize: horizontal;border: 1px #ccc solid;" />
+						</a>
+						<div style="margin-top:10px;">
+							<img style="height:100px;" id="img_url" src="${carousel.img_url!}" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-12" style="color: #999;">提示：建议图片尺寸750 * 300像素，图片大小不超过100KB</div>
+				</div>
+				<input type="hidden" name="img_url" value="${carousel.img_url!}" />
+				<input type="hidden" name="id" value="${carousel.id!}" />
+			</form>
+		</div>
+	</div>
+</div>
+<div style="width:100%;text-align: center;">
+	<button type="button" class="btn btn-info" onclick="return submitForm()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-ok bigger-110"></i>确定
+	</button>
+	&nbsp;&nbsp;
+	<button type="reset" class="btn" onclick="parent.hideAlert()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-undo bigger-110"></i>取消
+	</button>
+</div>
+<script>
+$(document).ready(function(){
+	
+	$("select[name='article_id']").val("${carousel.article_id!}");
+});
+$('#uploadImg').fileupload({
+    url: '/business/uploadImg',
+    dataType: 'json',
+    done: function (e,data) { 
+    	var json = $.parseJSON(data.jqXHR.responseText); 
+    	if(json.success){
+    		$("#img_url").attr("src", json.img_url);
+    		$("#img_url").show();
+    		$("input[name='img_url']").val(json.img_url);
+        }else{
+        	alert(json.msg);
+        }
+    }
+});
+function submitForm(){
+	
+	$('#submit_form').ajaxSubmit({
+	    success: function(data){
+	    	alert(data.msg);
+	    	if(data.success){
+	    		parent.location.reload(true);
+	    	}
+	    }
+	});
+}
+</script>

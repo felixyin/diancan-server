@@ -1,0 +1,94 @@
+<link rel="stylesheet" href="/shop/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="/shop/css/style.css" />
+
+<script src="/www/script/jquery.min.js"></script>
+<script src="/www/script/jquery.form.js"></script>
+
+<div class="page-content popup">
+	<div class="page-header">
+		<h1>菜品规格</h1>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<form class="form-horizontal" action="/shop/order/addShopping" method="post" id="submit_form">
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>菜品规格</label>
+					<div class="col-xs-12">
+						##for(_item in dishes_format_list!){
+							<div style="margin-bottom: 5px;">
+								<label>
+									##if(_itemLP.index==1){
+										<input type="radio" checked="checked" name="dishes_format_id" value="${_item.id!}" />
+										##if(dishes.shuxing_number == 1){
+											<span>${_item.title_1!}</span>
+											<span style="margin-left: 25px;">价格：${_item.price!}元</span>
+											<span style="margin-left: 25px;">库存：${_item.stock!}</span>
+										##}else if(dishes.shuxing_number == 2){
+											<span>${_item.title_1!} | ${_item.title_2!}</span>
+											<span style="margin-left: 25px;">价格：${_item.price!}元</span>
+											<span style="margin-left: 25px;">库存：${_item.stock!}</span>
+										##}else{
+											<span>${_item.title_1!} | ${_item.title_2!} | ${_item.title_3!}</span>
+											<span style="margin-left: 25px;">价格：${_item.price!}元</span>
+											<span style="margin-left: 25px;">库存：${_item.stock!}</span>
+										##}
+									##}else{
+										<input type="radio" name="dishes_format_id" value="${_item.id!}" />
+										##if(dishes.shuxing_number == 1){
+											<span>${_item.title_1!}</span>
+											<span style="margin-left: 25px;">价格：${_item.price!}元</span>
+											<span style="margin-left: 25px;">库存：${_item.stock!}</span>
+										##}else if(dishes.shuxing_number == 2){
+											<span>${_item.title_1!} | ${_item.title_2!}</span>
+											<span style="margin-left: 25px;">价格：${_item.price!}元</span>
+											<span style="margin-left: 25px;">库存：${_item.stock!}</span>
+										##}else{
+											<span>${_item.title_1!} | ${_item.title_2!} | ${_item.title_3!}</span>
+											<span style="margin-left: 25px;">价格：${_item.price!}元</span>
+											<span style="margin-left: 25px;">库存：${_item.stock!}</span>
+										##}
+									##}
+								</label>
+							</div>
+						##}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>菜品数量</label>
+					<div class="col-xs-12">
+						<input type="text" name="number" class="col-xs-10" value="1" />
+					</div>
+				</div>
+				<input type="hidden" name="id" value="${dishes.id!}" />
+			</form>
+		</div>
+	</div>
+</div>
+<div style="width:100%;text-align: center;">
+	<button type="button" class="btn btn-info" onclick="return submitForm()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-ok bigger-110"></i>确定
+	</button>
+	&nbsp;&nbsp;
+	<button type="reset" class="btn" onclick="parent.hideAlert()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-undo bigger-110"></i>取消
+	</button>
+</div>
+<script>
+function submitForm(){
+	
+	$('#submit_form').ajaxSubmit({
+	    success: function(data){
+	    	if(data.success){
+	    		parent.hideAlert();
+	    		parent.refreshShopping();
+	    	}else{
+	    		alert(data.msg);
+	    	}
+	    }
+	});
+}
+</script>

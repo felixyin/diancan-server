@@ -1,0 +1,178 @@
+##tlayout("shop/layout.htm"){
+
+<ul class="head_daohan_warp">
+	<li class="cur"><a href="/shop/tables">桌位管理</a></li>
+	<li><a href="/shop/order/tables">代客下单</a></li>
+	<li><a href="/shop/paidui">排队取号</a></li>
+	<li><a href="/shop/yuyuezhuowei">预约桌位</a></li>
+</ul>
+<div class="breadcrumbs">
+	<div class="col-xs-4 breadcrumbs_title" style="display: flex;align-items: center;">
+		<div class="breadcrumbs_list">
+			<a href="/shop/tables" class="cur">桌位管理</a>
+			<a href="/shop/tables/type">桌位类型</a>
+		</div>
+	</div>
+	<div class="col-xs-8 breadcrumbs_right">
+		<div style="float: right;">
+			<form action="/shop/tables/index" method="post">
+				##if(shop.qingtai == 0){
+					<a class="btn btn-info btn-sm kaiguan_parn_r" href="javascript:changeQingtai('开启人工清台', 1)">
+						<div class="paiduiquhao_warp_r" style="margin-bottom: -2px;">
+						    <div class="kg_tips">人工清台（已关闭）</div>
+						    <div class="btn_kg guan"> <span class="kai"></span><span></span>  </div>
+					    </div>
+					</a>
+				##}else{
+					<a class="btn btn-info btn-sm kaiguan_parn_r" href="javascript:changeQingtai('关闭人工清台', 0)">
+						<div class="paiduiquhao_warp_r bott style="margin-bottom: -2px;">
+						    <div class="kg_tips">人工清台（已开启）</div>
+						    <div class="btn_kg"> <span ></span><span class="kai"></span>  </div>
+					    </div>
+					</a>
+				##}
+				<a class="btn btn-info btn-sm" href="javascript:showAlert('/shop/tables/add')">+添加</a>
+				<select style="height:35px;vertical-align: top;" name="ttid">
+					<option value="">全部</option>
+					##for(_item in tables_type_list!){
+						<option value="${_item.id!}">${_item.title!}</option>
+					##}
+				</select>
+				<select style="height:35px;vertical-align: top;" name="status">
+					<option value="">全部</option>
+					<option value="0">空闲中</option>
+					<option value="1">已预约</option>
+					<option value="2">就餐中</option>
+					<option value="3">待清台</option>
+				</select>
+				<input type="text" placeholder="请输入搜索内容" name="content" value="${content!}" style="height: 35px;margin-left: 5px;" />
+				<button class="btn btn-sm" type="button" onclick="$(this).parent().submit()" style="margin-left: 5px;padding: 4px 10px;">确定</button>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="row order_table clearfix">
+				##for(_item in list!){
+					<div class="order_item table_item">
+						<div class="order_item_content table_item_content">
+							<div class="img">
+								##if(_item.status==0){
+									<div class="kong"><div>空闲中</div></div>
+									<div class="table_item_bottom" style="padding-top: 22px;">
+										<div class="zhu_func">
+											<a class="func_btn" href="/shop/order/shopping?id=${_item.id!}">开始点餐</a>
+										</div>
+										<div class="zhu_func">
+											<a class="func_btn" href="javascript:changeStatus(${_item.id!}, '已预约', 1)">已预约</a>
+										</div>
+										<div class="zhu_func">
+											<a class="func_btn" href="javascript:changeStatus(${_item.id!}, '就餐中', 2)">就餐中</a>
+										</div>
+										<div class="zhu_func">
+											<a class="func_btn" href="javascript:changeStatus(${_item.id!}, '待清台', 3)">待清台</a>
+										</div>
+									</div>
+								##}else if(_item.status==1){
+									<div class="yu"><div>已预约</div></div>
+									<div class="table_item_bottom" style="padding-top: 22px;">
+										<div class="zhu_func">
+											<a class="func_btn" href="/shop/order/shopping?id=${_item.id!}">开始点餐</a>
+										</div>
+										<div class="zhu_func">
+											<a class="func_btn" href="javascript:changeStatus(${_item.id!}, '取消预约', 0)">取消预约</a>
+										</div>
+										<div class="zhu_func">
+											<a class="func_btn" href="javascript:changeStatus(${_item.id!}, '就餐中', 2)">就餐中</a>
+										</div>
+										<div class="zhu_func">
+											<a class="func_btn" href="javascript:changeStatus(${_item.id!}, '待清台', 3)">待清台</a>
+										</div>
+									</div>
+								##}else if(_item.status==2){
+									<div class="jiu"><div>就餐中</div></div>
+									<div class="table_item_bottom" style="padding-top: 55px;">
+										<div class="zhu_func">
+											<a class="func_btn" href="javascript:changeStatus(${_item.id!}, '空闲中', 0)">空闲中</a>
+										</div>
+										<div class="zhu_func">
+											<a class="func_btn" href="javascript:changeStatus(${_item.id!}, '待清台', 3)">待清台</a>
+										</div>
+									</div>
+								##}else{
+									<div class="dai"><div>待清台</div></div>
+									<div class="table_item_bottom" style="padding-top: 75px;">
+										<div class="zhu_func">
+											<a class="func_btn" href="javascript:changeStatus(${_item.id!}, '空闲中', 0)">空闲中</a>
+										</div>
+									</div>
+								##}
+							</div>
+							<div class="table_item_text">
+								<div class="title">${_item.title!}</div>
+								<div class="status_number clearfix">
+									<span class="fl color_green">￥${_item.price!} 元</span>
+									<span class="fr">${_item.tables_type_title!}</span>
+								</div>
+								<div class="gomngneng_bottom_fun_btn"> 
+									<a class="icon_func_item" href="/shop/tables/download?id=${_item.id!}" title="下载二维码">
+										<img src="/shop/images/dowo_r.png"/>
+									</a>
+									<a class="icon_func_item" href="javascript:showAlert('/shop/tables/edit?id=${_item.id!}')" title="编辑">
+										<img src="/shop/images/bianji_r.png"/>
+									</a>
+									<a class="icon_func_item" href="javascript:void(0)" onclick="deleted(${_item.id!})" title="删除">
+										<img src="/shop/images/dele_r.png"/>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				##}
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function(){
+	
+	$("select[name='ttid']").val("${ttid!}");
+	$("select[name='status']").val("${status!}");
+});
+function deleted(id){
+	
+	if(confirm("确定要删除该条记录吗？")){
+		$.post("/shop/tables/deleted",{id:id},function(data){
+			alert(data.msg);
+			if(data.success){
+				location.reload(true);
+			}
+		});
+	}
+}
+function changeQingtai(msg, qingtai){
+	
+	if(confirm("确定要"+ msg +"吗？")){
+		$.post("/shop/tables/changeQingtai",{qingtai:qingtai},function(data){
+			alert(data.msg);
+			if(data.success){
+				location.reload(true);
+			}
+		});
+	}
+}
+function changeStatus(id, msg, status){
+	
+	if(confirm("确定要"+ msg +"该条记录吗？")){
+		$.post("/shop/tables/changeStatus",{id:id,status:status},function(data){
+			alert(data.msg);
+			if(data.success){
+				location.reload(true);
+			}
+		});
+	}
+}
+</script>
+##}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>${_common.baseTitle()}门店端</title>
+	<link rel="stylesheet" href="/www/css/login.css" />
+	<script src="/www/script/jquery.min.js"></script>
+	<script src="/www/script/jquery.form.js"></script>
+</head>
+<body>
+<div class="bg-wrap">
+	<div class="main-cont-wrap login-model">
+		<h2 class="shop_logo"><i>${_common.baseTitle()}</i> 门店端</h2>
+		<div class="main-cont-c">
+			<form action="/shop/login" method="post" id="submit_form">
+				<div class="form-title g-mb40">
+					<span class="s-txt-c s-fs20">门店登录</span>
+				</div>
+				<div class="ui-form-item g-mb30">
+					<span class="ui-form-txt">手机号</span>
+					<input type="text" name="email" class="ui-form-input" placeholder="请输入登录手机号" />
+				</div>
+				<div class="ui-form-item g-mb30">
+					<span class="ui-form-txt">密码</span>
+					<input type="password" name="password" class="ui-form-input" placeholder="请输入登录密码" />
+				</div>
+				<div class="ui-form-item g-mb30">
+					<span class="ui-form-txt">验证码</span>
+					<input type="text" name="code" class="ui-form-input" placeholder="请输入图片验证码" />
+					<img src="/shop/code" class="yzm_img" onclick="changeCodes(this)" id="changeCode" />
+				</div>
+				<div class="ui-form-btn">
+					<input type="button" class="ui-button login-btn" value="登陆" onclick="submitForm()" />
+				</div>
+				<div class="g-mb30 clearfix" style="margin-top: 30px;">
+					<a href="/business" class="f-fl s-txt-gy2" style="color: #38f;font-size: 14px;">商家登录 >></a>
+					<a href="/business/register" class="f-fr s-txt-gy2" style="color: #38f;font-size: 14px;">商家注册 >></a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="footer-wrap">
+		<p class="s-tac s-txt-gy1">&copy; 2017 Simple Login Form. All Rights Reserved | Design by <a href="http://www.xiaodaofuli.com" target="_blank">青岛蓝图科技网络有限公司</a></p>
+	</div>
+</div>
+<script>
+function changeCodes(object){
+	
+	$(object).attr("src", "/shop/code?t=" + Math.random());
+}
+function submitForm(){
+	
+	$('#submit_form').ajaxSubmit({
+	    success: function(data){
+	    	if(data.success){
+	    		window.location.href="/shop/dashboard";
+	    	}else{
+	    		$(".yzm_img").attr("src", "/shop/code?t="+Math.random());
+	    		alert(data.msg);
+	    	}
+	    }
+	});
+}
+</script>
+</body>
+</html>

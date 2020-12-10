@@ -1,0 +1,94 @@
+##tlayout("admin/layout.htm"){
+
+<script type="text/javascript" src="/www/script/JsDatePicker/WdatePicker.js"></script>
+
+<div class="breadcrumbs">
+	<div class="col-xs-4 breadcrumbs_title">会员管理</div>
+	<div class="col-xs-8" style="text-align: right;">
+		<form action="/admin/user/index" method="post" id="sumbit_form">
+			<label class="labels_time"><a href="javascript:changeTime('${today_start_time!}', '${today_end_time!}')" style="color: #000"><span>今日</span></a></label>
+			<label class="labels_time"><a href="javascript:changeTime('${yesterday_start_time!}', '${yesterday_end_time!}')" style="color: #000" ><span>昨日</span></a></label>
+			<label class="labels_time"><a href="javascript:changeTime('${seven_start_time!}', '${seven_end_time!}')" style="color: #000"><span>近7日</span></a></label>
+			<label class="labels_time"><a href="javascript:changeTime('${thirty_start_time!}', '${thirty_end_time!}')" style="color: #000"><span>近30日</span></a></label>
+			<label class="labels_time"><a href="javascript:changeTime('', '')" style="color: #000"><span>历史</span></a></label>
+			<select style="height:35px;vertical-align: top;" name="bid">
+				<option value="">全部</option>
+				##for(_item in business_list!){
+					<option value="${_item.id!}">${_item.title!}</option>
+				##}
+			</select>
+			<input type="text" placeholder="请输入开始时间" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" value="${startT!}" name="startT" style="height:35px;line-height: 35px;" />
+            <input type="text" placeholder="请输入结束时间" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" value="${endT!}" name="endT" style="height:35px;line-height: 35px;" />
+			<button class="btn btn-sm" onclick="$('#sumbit_form').submit()" type="button">确定</button>
+		</form>
+	</div>
+</div>
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12" style="height: 30px;line-height: 30px;">会员数量：${user_number!}，消费会员：${xiaofei_number!}</div>
+		<div class="col-xs-12">
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>会员</th>
+							<th>联系人</th>
+							<th>账户余额</th>
+							<th>商家</th>
+							<th>创建时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						##for(_item in results.list!){
+						<tr>
+							<td>
+								<div><img src="${_item.img_url!}" style="width: 50px;" /></div>
+								<div style="margin-top: 5px;">${_item.name!}</div>
+							</td>
+							<td>
+								##if(_item.user_name!=null && _item.user_name!=""){
+									${_item.user_name!} | ${_item.user_mobile!}							
+								##}
+							</td>
+							<td><a href="/admin/user/log?uid=${_item.id!}">${_item.account!}</a></td>
+							<td>${_item.business_title!}</td>
+							<td>${_item.create_date!,dateFormat='yyyy-MM-dd HH:mm'}</td>
+							<td style="width:100px;">
+								<div class="btn-group">
+									<button class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
+										操作<span class="icon-caret-down icon-on-right"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-info pull-right">
+										<li><a href="/admin/user/log?uid=${_item.id!}">钱包纪录</a></li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+						##}
+					</tbody>
+				</table>
+			</div>
+			##if(totalPage>1){
+				<div class="fenye">
+					<#_pagination page="${results!}" params="bid,startT,endT">
+						<ul id="Pagination"></ul>
+					</#_pagination>
+				</div>
+			##}
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function(){
+	
+	$("select[name='bid']").val("${bid!}");
+});
+function changeTime(startT,endT){
+	
+	$("input[name='startT']").val(startT);
+	$("input[name='endT']").val(endT);
+	$("#sumbit_form").submit();
+}
+</script>
+##}

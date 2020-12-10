@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="/business/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/business/assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/business/assets/css/ace.min.css" />
+<link rel="stylesheet" href="/business/assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="/business/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="/business/css/style.css" />
+
+<script src="/www/script/jquery.min.js"></script>
+<script src="/www/script/jquery.form.js"></script>
+
+<div class="page-content popup">
+	<div class="page-header">
+		<h1>微信付款</h1>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="pay_qrcode_title">微信扫描二维码付款</div>
+			<div id="qrcode" class="pay_qrcode"></div>
+		</div>
+	</div>
+</div>
+<div style="width:100%;text-align: center;">
+	<button type="reset" class="btn" onclick="parent.hideAlert()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-undo bigger-110"></i>取消
+	</button>
+</div>
+<script src="/www/script/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+	$('#qrcode').qrcode("${qrcode!}");
+	setInterval(function(){
+		$.post("/business/goods/wxQuery",{code:"${business_renew.code!}"},function(data){
+			if(data.success){
+				alert(data.msg);
+				parent.window.location.href="/business/goods";
+			}
+		});
+	}, 3000);
+});
+</script>

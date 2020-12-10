@@ -1,0 +1,215 @@
+.clearfix{*zoom:1;}/*IE/7/6*/
+.clearfix:before,.clearfix:after{content:"\0020";display:block;height:0;overflow:hidden}.clearfix:after{clear:both}.clearfix{zoom:1}
+abbr, address, article, aside, b, blockquote, body, cite, code, dd, del, details, dfn, div, dl, dt, em, figcaption, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, i, iframe, ins, kbd, label, mark, menu, nav, object, ol, p, pre, q, samp, section, small, span, strong, summary, time, var {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+    background: 0 0;
+}
+　input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+　　color: #aaa;
+　　}
+　　input:-moz-placeholder, textarea:-moz-placeholder {
+　　color:#aaa;
+　　}
+　　input::-moz-placeholder, textarea::-moz-placeholder {
+　　color:#aaa;
+　　}
+　　input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+　　color:#aaa;
+　　}
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+a, button, input, textarea {
+    -webkit-tap-highlight-color: transparent;
+}
+input {
+    line-height: normal;
+}
+a{
+	color: #444;
+	text-decoration: none;
+}
+img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+    vertical-align: middle;
+}
+html, img, legend {
+    margin: 0;
+}
+img {
+    padding: 0;
+}
+body {
+    font-family: "Microsoft YaHei","裏罷囘菜",Arial,sans-serif;
+    color: #333;
+}
+.bg-wrap {
+    background-size: 100% 100%;
+    overflow: hidden;
+    background: url("/shop/images/login_bg.jpg") no-repeat;
+}
+.bg-wrap, body, html {
+    height: 100%;
+}
+.main-cont-wrap {
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -190px;
+    margin-top: -300px;
+    box-sizing: border-box;
+    width: 380px;
+    height: 520px;
+    
+}
+.main-cont-c {
+	padding: 30px 30px 40px;
+    background: #fff;
+    box-shadow: 0 20px 30px 0 rgba(63,63,65,.06);
+    -webkit-box-shadow: 0 20px 30px 0 rgba(63,63,65,.06);
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+.main-cont-wrap .shop_logo {
+	text-align: center;
+	 margin-bottom: 20px;
+	font-size: 28px;
+	padding: 10px;
+	border-radius: 10px;
+}
+.main-cont-wrap .shop_logo > i {
+	color: #fe6c27;
+	font-style: normal;
+}
+.footer-wrap {
+    position: absolute;
+    bottom: 23px;
+    left: 0;
+    right: 0;
+    font-size: 12px;
+}
+.s-txt-gy1,.s-txt-gy1 a {
+    color: #b2adbc;
+}
+.s-tac {
+    text-align: center;
+}
+.g-mb40 {
+    margin-bottom: 40px;
+}
+.s-txt-c {
+    color: #38f;
+}
+.s-fs20 {
+    font-size: 20px;
+}
+.f-fr {
+    float: right;
+}
+.s-fs14 {
+    font-size: 14px;
+}
+.s-txt-gy1 {
+    color: #b2adbc;
+}
+.g-mr5 {
+    margin-right: 5px;
+}
+.g-vta-m {
+    vertical-align: middle;
+}
+.g-mb30 {
+    margin-bottom: 30px;
+}
+.ui-form-item {
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #e3e3e3;
+    box-sizing: border-box;
+}
+.ui-form-txt {
+    display: inline-block;
+    width: 70px;
+    color: #222;
+    font-size: 14px;
+    margin-right: 10px;
+}
+.ui-form-input {
+    width: 155px;
+}
+.ui-form-input, .ui-form-input1 {
+    border: 0;
+    outline: 0;
+    font-size: 14px;
+    color: #595961;
+}
+input:-webkit-autofill, select:-webkit-autofill, textarea:-webkit-autofill {
+    background-color: #fff!important;
+    -webkit-box-shadow: 0 0 0 1000px #fff inset;
+    color: #bbb;
+}
+.yzm_img {
+	width: 70px;
+	height: 30px;
+	float: right;
+	margin-top: 5px;
+}
+.ui-button {
+    display: block;
+    width: 320px;
+    height: 50px;
+    text-align: center;
+    color: #fff;
+    background: #38f;
+    border-radius: 6px;
+    font-size: 16px;
+    border: 0;
+    outline: 0;
+}
+.f-fr {
+	float: right;
+}
+.s-txt-gy2,
+a.s-txt-gy2
+ {
+    color: #595961;
+}
+
+.ui-button:hover {
+    background-color: #217be5;
+}
+.ui-getcode {
+    font-size: 14px;
+    text-align: right;
+}
+.ui-code-img, .ui-getcode {
+    width: 70px;
+    display: inline-block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

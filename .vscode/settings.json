@@ -1,0 +1,19 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "qtrj.i234.me",
+            "port": 3308,
+            "driver": "MariaDB",
+            "name": "nas",
+            "group": "server",
+            "database": "mysql",
+            "username": "root",
+            "password": "Ybkk1027"
+        }
+    ]
+}

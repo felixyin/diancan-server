@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="/shop/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="/shop/css/style.css" />
+
+<script src="/www/script/jquery.min.js"></script>
+<script src="/www/script/jquery.form.js"></script>
+
+<div class="page-content popup">
+	<div class="page-header">
+		<h1>订单换桌</h1>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			##for(_item in tables_list!){
+				##if(_item.status==0){
+					<div class="huanzhuo_item_warp_r">
+						<div class="content_txt_ap">
+						   <div class="zhuohao_name">${_item.title!}</div>
+							<div class="jiage_huanzhuo_r">${_item.tables_type_title!} | ${_item.price!}元</div>
+							<div ><a class="btn_huan" href="javascript:doTables(${_item.id!})">订单换桌</a></div>
+						</div>
+					</div>
+				##}
+			##}
+		</div>
+	</div>
+</div>
+<div style="width:100%;text-align: center;">
+	<button type="reset" class="btn" onclick="parent.hideAlert()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-undo bigger-110"></i>取消
+	</button>
+</div>
+<script>
+function doTables(tid){
+	
+	if(confirm("确定要执行该操作吗？")){
+		$.post("/shop/tangshi/doTables",{id:"${orders.id!}",tid:tid},function(data){
+			alert(data.msg);
+			if(data.success){
+				parent.location.reload(true);
+			}
+		});
+	}
+}
+</script>

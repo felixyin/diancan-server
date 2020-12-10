@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>${_common.baseTitle()}商家端</title>
+	<link href="/business/assets/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/business/assets/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="/business/assets/css/ace.min.css" />
+	<link rel="stylesheet" href="/business/assets/css/ace-rtl.min.css" />
+	<link rel="stylesheet" href="/business/assets/css/ace-skins.min.css" />
+	<link rel="stylesheet" href="/business/css/style.css" />
+	<link rel="stylesheet" href="/business/css/icon.css"/>
+	<script src="/www/script/jquery.min.js"></script>
+	<script src="/www/script/jquery.form.js"></script>
+	<script src="/business/assets/js/ace-extra.min.js"></script>
+	<script src="/business/assets/js/bootstrap.min.js"></script>
+	<script src="/business/assets/js/typeahead-bs2.min.js"></script>
+	<script src="/business/assets/js/ace-elements.min.js"></script>
+	<script src="/business/assets/js/ace.min.js"></script>
+	<script src="/business/assets/js/jquery.nicescroll.min.js"></script>
+</head>
+<body>
+<div class="main-container" id="main-container">
+	<div class="main-container-inner">
+		<a class="menu-toggler" id="menu-toggler" href="javascript:void(0)">
+			<span class="menu-text"></span>
+		</a>
+		<div class="sidebar sidebar_fixed" id="sidebar">
+			<div class="sidebar_fixed_content">
+				<div class="sidebar_title">
+					<div class="name">
+						<a href="/business/dashboard" >
+							<img src="/business/images/logo_01.png" />
+							<div class="layout_left">${business.title!}</div>
+						</a>	
+						<div class="clearfix shop_admin_name_wrap">
+							<span class="shop_admin_name">${business_admin.name!}</span>
+							<a href="/business/layout" class="tuichu">退出</a>
+						</div>
+					</div>
+				</div>
+				<ul class="nav nav-list">
+					<li>
+						<a href="/business/dashboard">
+							<span class="left_icon app-sidebar__icon--dashboard"></span>
+							<span class="menu-text">财务统计</span>
+						</a>
+					</li>
+					##for(_item in session.business_admin_menu!){
+						<li>
+							<a href="${_item.url!}">
+								<span class="${_item.icon!}"></span>
+								<span class="menu-text">${_item.title!}</span>
+							</a>
+						</li>
+					##}
+					##if(business_admin.type==1){
+						<li>
+							<a href="/business/staff">
+								<span class="left_icon left_yuangong_icon"></span>
+								<span class="menu-text">员工管理</span>
+							</a>
+						</li>
+						<li>
+							<a href="/business/root">
+								<span class="left_icon left_shouquan_icon"></span>
+								<span class="menu-text">授权发布</span>
+							</a>
+						</li>
+					##}
+					<li>
+						<a href="javascript:showAlert('/business/system/editPwd')">
+							<span class="left_icon app-sidebar__icon--profile"></span>
+							<span class="menu-text">账户安全</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="main-content">
+			${layoutContent}
+		</div>
+	</div>
+	<a href="javascript:void(0)" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse" style="position: fixed;">
+		<i class="icon-double-angle-up icon-only bigger-110"></i>
+	</a>
+</div>
+<div class="tanchu_bg" id="tanchu_bg">
+	<iframe id="tanchu_ifream" src="/business/blank" scrolling="no" allowtransparency="true"></iframe>
+</div>
+<script>
+$(document).ready(function(){
+	
+	if("${url_1!}"=="/business/charge" || "${url_1!}"=="/business/rule"){
+		$("#sidebar").find("a").each(function(){
+			if($(this).attr("href")=="/business/charge"){
+				$(this).parent().addClass("active");
+			}
+		});
+	}else if("${url_1!}"=="/business/dishes" || "${url_1!}"=="/business/dishes/type" || "${url_1!}"=="/business/dishes/shop"){
+		$("#sidebar").find("a").each(function(){
+			if($(this).attr("href")=="/business/dishes"){
+				$(this).parent().addClass("active");
+			}
+		});
+	}else if("${url_1!}"=="/business/shop" || "${url_1!}"=="/business/shop/comment"){
+		$("#sidebar").find("a").each(function(){
+			if($(this).attr("href")=="/business/shop"){
+				$(this).parent().addClass("active");
+			}
+		});
+	}else if("${url_1!}"=="/business/article" || "${url_1!}"=="/business/notice" || "${url_1!}"=="/business/carousel"){
+		$("#sidebar").find("a").each(function(){
+			if($(this).attr("href")=="/business/article"){
+				$(this).parent().addClass("active");
+			}
+		});
+	}else{
+		$("#sidebar").find("a").each(function(){
+			if($(this).attr("href")=="${url_1!}" || $(this).attr("href")=="${url!}"){
+				$(this).parent().addClass("active");
+			}
+		});
+	}
+	$(".sidebar_fixed").niceScroll();
+});
+function hideAlert(){
+	
+	$("#tanchu_bg").hide();
+	$("#tanchu_ifream").attr("src","/business/blank");
+}
+function showAlert(url){
+	
+	$("#tanchu_ifream").attr("src",url);
+	$("#tanchu_bg").show();
+}
+</script>
+</body>
+</html>

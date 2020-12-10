@@ -1,0 +1,122 @@
+<link rel="stylesheet" href="/shop/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="/shop/css/style.css" />
+
+<script src="/www/script/jquery.min.js"></script>
+<script src="/www/script/jquery.form.js"></script>
+
+<div class="page-content popup">
+	<div class="page-header">
+		<h1>门店设置</h1>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<form action="/shop/system/update" method="post" class="form-horizontal" id="submit_form">
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>餐具费</label>
+					<div class="col-xs-12">
+						<input class="col-xs-10" type="text" name="tableware_price" value="${shop.tableware_price!}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>外卖</label>
+					<div class="col-xs-12">
+						##if(shop.takeaway_status==1){
+							<label><input type="radio" name="takeaway_status" value="1" checked="checked" /> 开启</label>
+							<label style="margin-left: 25px;"><input type="radio" name="takeaway_status" value="0" /> 关闭</label>
+						##}else{
+							<label><input type="radio" name="takeaway_status" value="1" /> 开启</label>
+							<label style="margin-left: 25px;"><input type="radio" name="takeaway_status" value="0" checked="checked" /> 关闭</label>
+						##}
+					</div>
+				</div>
+				##if(shop.takeaway_status==1){
+					<div id="takeaway_content">
+				##}else{
+					<div style="display: none;" id="takeaway_content">
+				##}
+					<div class="form-group">
+						<label class="col-xs-12 control-label"><span style="color: #f00">*</span>外卖配送</label>
+						<div class="col-xs-12">
+							##if(shop.takeaway_distribution_status==1){
+								<label><input type="radio" name="takeaway_distribution_status" value="1" checked="checked" /> 开启</label>
+								<label style="margin-left: 25px;"><input type="radio" name="takeaway_distribution_status" value="0" /> 关闭</label>
+							##}else{
+								<label><input type="radio" name="takeaway_distribution_status" value="1" /> 开启</label>
+								<label style="margin-left: 25px;"><input type="radio" name="takeaway_distribution_status" value="0" checked="checked" /> 关闭</label>
+							##}
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-12 control-label"><span style="color: #f00">*</span>外卖自提</label>
+						<div class="col-xs-12">
+							##if(shop.takeaway_own_status==1){
+								<label><input type="radio" name="takeaway_own_status" value="1" checked="checked" /> 开启</label>
+								<label style="margin-left: 25px;"><input type="radio" name="takeaway_own_status" value="0" /> 关闭</label>
+							##}else{
+								<label><input type="radio" name="takeaway_own_status" value="1" /> 开启</label>
+								<label style="margin-left: 25px;"><input type="radio" name="takeaway_own_status" value="0" checked="checked" /> 关闭</label>
+							##}
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>配送费</label>
+					<div class="col-xs-12">
+						<input class="col-xs-10" type="text" name="takeaway_price" value="${shop.takeaway_price!}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>配送范围</label>
+					<div class="col-xs-12">
+						<input class="col-xs-10" type="text" name="takeaway_distance" value="${shop.takeaway_distance!}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-12" style="color: #999;">提示：配送范围单位公里，0表示不限制配送</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>起送金额</label>
+					<div class="col-xs-12">
+						<input class="col-xs-10" type="text" name="takeaway_moq" value="${shop.takeaway_moq!}" />
+					</div>
+				</div>
+			</form>	
+		</div>
+	</div>
+</div>
+<div style="width:100%;text-align: center;">
+	<button type="button" class="btn btn-info" onclick="return submitForm()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-ok bigger-110"></i>确定
+	</button>
+	&nbsp;&nbsp;
+	<button type="reset" class="btn" onclick="parent.hideAlert()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-undo bigger-110"></i>取消
+	</button>
+</div>
+<script>
+$(document).ready(function(){
+
+	$("input[name='takeaway_status']").click(function(){
+		if($("input[name='takeaway_status']:checked").val()==1){
+			$("#takeaway_content").show();
+		}else{
+			$("#takeaway_content").hide();
+		}
+	});
+});
+function submitForm(){
+	
+	$('#submit_form').ajaxSubmit({
+	    success: function(data){
+	    	alert(data.msg);
+	    	if(data.success){
+	    		parent.location.reload(true);
+	    	}
+	    }
+	});
+}
+</script>

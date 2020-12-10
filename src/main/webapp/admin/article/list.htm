@@ -1,0 +1,88 @@
+##tlayout("admin/layout.htm"){
+
+<div class="breadcrumbs">
+	<div class="col-xs-12 breadcrumbs_title">文章管理</div>
+</div>
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="tabbable tabs-left">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="/admin/article" style="padding: 15px 20px;">
+							<span style="margin-left: 5px;">文章管理</span>
+						</a>
+					</li>
+					<li>
+						<a href="/admin/notice" style="padding: 15px 20px;">
+							<span style="margin-left: 5px;">平台公告</span>
+						</a>
+					</li>
+				</ul>
+				<div class="tab-content" style="min-height: 500px;">
+					<div class="tab-pane" style="display: block;">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="table-responsive">
+									<table class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>标题</th>
+												<th>图片</th>
+												<th>商家</th>
+												<th>创建时间</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											##for(_item in results.list!){
+											<tr>
+												<td>${_item.title!}</td>
+												<td><img src="${_item.img_url!}" style="height: 100px;" /></td>
+												<td>${_item.business_title!}</td>
+												<td>${_item.create_date!,dateFormat='yyyy-MM-dd HH:mm'}</td>
+												<td style="width:100px;">
+													<div class="btn-group">
+														<button class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
+															操作<span class="icon-caret-down icon-on-right"></span>
+														</button>
+														<ul class="dropdown-menu dropdown-info pull-right">
+															<li><a href="/admin/article/edit?id=${_item.id!}">编辑</a></li>
+															<li><a href="javascript:changeStatus(${_item.id!}, 9, '删除')">删除</a></li>
+														</ul>
+													</div>
+												</td>
+											</tr>
+											##}
+										</tbody>
+									</table>
+								</div>
+								##if(totalPage>1){
+									<div class="fenye">
+										<#_pagination page="${results!}">
+											<ul id="Pagination"></ul>
+										</#_pagination>
+									</div>
+								##}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+function changeStatus(id, status, msg){
+	
+	if(confirm("确定要" + msg + "该条记录吗？")){
+		$.post("/admin/article/changeStatus",{id:id,status:status},function(data){
+			alert(data.msg);
+			if(data.success){
+				location.reload(true);
+			}
+		});
+	}
+}
+</script>
+##}

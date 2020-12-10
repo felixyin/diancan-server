@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.qtrj</groupId>
+  <artifactId>diancan</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>diancan Maven Webapp</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.qdqtrj.com</url>
+
+  <properties>
+    <lib.path>${basedir}/src/main/webapp/WEB-INF/lib</lib.path>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <downloadSources>true</downloadSources>
+  </properties>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>my-nexus</id>
+      <url>http://qtrj.i234.me:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>my-nexus</id>
+      <url>http://qtrj.i234.me:8081/repository/maven-releases/</url>
+    </repository>
+  </distributionManagement>
+
+  <repositories>
+    <repository>
+      <id>my-nexus</id>
+      <name>maven 私服</name>
+      <url>http://qtrj.i234.me:8081/repository/maven-public/</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <!--  commons-logging-1.2.jar -->
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <!--  aliyun-java-sdk-core-2.4.2.jar -->
+    <dependency>
+      <groupId>com.aliyun</groupId>
+      <artifactId>aliyun-java-sdk-core</artifactId>
+      <version>2.4.2</version>
+      <systemPath>${lib.path}/aliyun-java-sdk-core-2.4.2.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+    <!--  mysql-connector-java-5.1.44-bin.jar -->
+    <dependency>
+      <groupId>mysql-connector</groupId>
+      <artifactId>mysql-connector</artifactId>
+      <version>1.0</version>
+      <systemPath>${lib.path}/mysql-connector-java-5.1.44-bin.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+
+    <!--  freemarker-2.3.20.jar -->
+    <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+      <version>2.3.20</version>
+    </dependency>
+    <!--  jta-1.1.jar -->
+    <dependency>
+      <groupId>javax.transaction</groupId>
+      <artifactId>transaction-api</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <!--  commons-beanutils-1.7.0.jar -->
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.7.0</version>
+    </dependency>
+
+    <!--  pingpp-java-2.1.8.jar -->
+    <dependency>
+      <groupId>pingpp-java</groupId>
+      <artifactId>pingpp-java</artifactId>
+      <version>2.1.8</version>
+      <systemPath>${lib.path}/pingpp-java-2.1.8.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+    <!--  json-lib-2.4-jdk15.jar -->
+    <dependency>
+      <groupId>com.hynnet</groupId>
+      <artifactId>json-lib</artifactId>
+      <version>2.4</version>
+    </dependency>
+    <!--  fluent-hc-4.5.2.jar -->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>fluent-hc</artifactId>
+      <version>4.5.2</version>
+    </dependency>
+    <!--  jfinal-ext2-2.0.8.jar -->
+    <dependency>
+      <groupId>com.jfinal</groupId>
+      <artifactId>jfinal-ext2</artifactId>
+      <version>2.0.8</version>
+    </dependency>
+    <!--  log4j-1.2.17.jar -->
+    <dependency>
+      <groupId>org.zenframework.z8.dependencies.commons</groupId>
+      <artifactId>log4j-1.2.17</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <!--  jetty-server-2019.3.jar -->
+    <dependency>
+      <groupId>jetty-server</groupId>
+      <artifactId>jetty-server</artifactId>
+      <version>2019</version>
+      <systemPath>${lib.path}/jetty-server-2019.3.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+    <!--  beetl-core-2.1.0.jar -->
+    <dependency>
+      <groupId>beetl-core</groupId>
+      <artifactId>beetl-core</artifactId>
+      <version>2.1.0</version>
+      <systemPath>${lib.path}/beetl-core-2.1.0.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+    <!--  alipay-sdk.jar -->
+    <dependency>
+      <groupId>alipay-sdk</groupId>
+      <artifactId>alipay-sdk</artifactId>
+      <version>2.1.0</version>
+      <systemPath>${lib.path}/alipay-sdk.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+    <!--  httpclient-win-4.5.2.jar -->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient-win</artifactId>
+      <version>4.5.2</version>
+    </dependency>
+    <!--  jdom-1.0.jar -->
+    <dependency>
+      <groupId>com.sun.phobos</groupId>
+      <artifactId>jdom</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <!--  jfinal-4.8-bin-with-src.jar -->
+    <dependency>
+      <groupId>jfinal</groupId>
+      <artifactId>jfinal</artifactId>
+      <version>4.8</version>
+      <systemPath>${lib.path}/jfinal-4.8-bin-with-src.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+
+    <!--  fastjson-1.2.7.jar -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.7</version>
+    </dependency>
+    <!--  druid-1.0.29.jar -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.0.29</version>
+    </dependency>
+    <!--  blade-kit-1.2.9-alpha.jar -->
+    <dependency>
+      <groupId>com.bladejava</groupId>
+      <artifactId>blade-kit</artifactId>
+      <version>1.2.9-alpha</version>
+    </dependency>
+    <!--  httpclient-4.5.2.jar -->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.2</version>
+    </dependency>
+    <!--  jackson-core-2.4.3.jar -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.4.3</version>
+    </dependency>
+    <!--  jackson-databind-2.4.3.jar -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.4.3</version>
+    </dependency>
+    <!--  hdcardqr-1.0.0.jar -->
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>4.2.2</version>
+    </dependency>
+    <!--  poi-3.7.jar -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>3.7</version>
+    </dependency>
+    <!--  xom-1.1.jar -->
+    <dependency>
+      <groupId>xom</groupId>
+      <artifactId>xom</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <!--  jfinal-ext-3.1.0.jar -->
+    <dependency>
+      <groupId>com.jfinal</groupId>
+      <artifactId>jfinal-ext</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+    <!--  quartz-all-1.6.0-osgi.jar -->
+    <dependency>
+      <groupId>com.github.j-mie6</groupId>
+      <artifactId>parsley_0.27</artifactId>
+      <version>1.6.0</version>
+    </dependency>
+    <!--  aliyun-java-sdk-dysmsapi-1.0.0.jar -->
+    <dependency>
+      <groupId>aliyun-java-sdk-dysmsapi</groupId>
+      <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+      <version>1.0</version>
+      <systemPath>${lib.path}/aliyun-java-sdk-dysmsapi-1.0.0.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+    <!--  commons-io-2.4.jar -->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.4</version>
+    </dependency>
+    <!--  thumbnailator-0.4.2.jar -->
+    <dependency>
+      <groupId>net.coobird</groupId>
+      <artifactId>thumbnailator</artifactId>
+      <version>0.4.2</version>
+    </dependency>
+    <!--  jna-platform-4.1.0.jar -->
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna-platform</artifactId>
+      <version>4.1.0</version>
+    </dependency>
+    <!--  beetl-2.7.14.jar -->
+    <dependency>
+      <groupId>com.ibeetl</groupId>
+      <artifactId>beetl</artifactId>
+      <version>2.7.14</version>
+    </dependency>
+    <!--  commons-codec-1.10.jar -->
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.10</version>
+    </dependency>
+    <!--  cos-26Dec2008.jar -->
+    <dependency>
+      <groupId>cos</groupId>
+      <artifactId>cos</artifactId>
+      <version>1.0</version>
+      <systemPath>${lib.path}/cos-26Dec2008.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+    <!--  cron4j-2.2.5.jar -->
+    <dependency>
+      <groupId>it.sauronsoftware.cron4j</groupId>
+      <artifactId>cron4j</artifactId>
+      <version>2.2.5</version>
+    </dependency>
+    <!--  jna-4.1.0.jar -->
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>4.1.0</version>
+    </dependency>
+    <!--  jsoup-1.7.2.jar -->
+    <dependency>
+      <groupId>org.ofdrw</groupId>
+      <artifactId>ofdrw-full</artifactId>
+      <version>1.7.2</version>
+    </dependency>
+    <!--  httpclient-cache-4.5.2.jar -->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient-cache</artifactId>
+      <version>4.5.2</version>
+    </dependency>
+    <!--  aliyun-sdk-oss-3.6.0.jar -->
+    <dependency>
+      <groupId>com.aliyun.oss</groupId>
+      <artifactId>aliyun-sdk-oss</artifactId>
+      <version>3.6.0</version>
+    </dependency>
+    <!--  druid-0.2.18.jar -->
+    <!-- <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>0.2.18</version>
+    </dependency> -->
+    <!--  dom4j-1.6.1.jar -->
+    <dependency>
+      <groupId>org.zenframework.z8.dependencies.commons</groupId>
+      <artifactId>dom4j-1.6.1</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <!--  sqljdbc4.jar -->
+    <dependency>
+      <groupId>sqljdbc4</groupId>
+      <artifactId>sqljdbc4</artifactId>
+      <version>1.0</version>
+      <systemPath>${lib.path}/sqljdbc4.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+    <!--  poi-ooxml-3.7.jar -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>3.7</version>
+    </dependency>
+    <!--  guava-r07.jar -->
+    <dependency>
+      <groupId>guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>1.0</version>
+      <systemPath>${lib.path}/guava-r07.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+    <!--  commons-collections-3.2.1.jar -->
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.2.1</version>
+    </dependency>
+    <!--  jfinal-weixin-1.7-bin-with-src.jar -->
+    <dependency>
+      <groupId>jfinal-weixin</groupId>
+      <artifactId>jfinal-weixin</artifactId>
+      <version>1.7</version>
+      <systemPath>${lib.path}/jfinal-weixin-1.7-bin-with-src.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+    <!--  httpcore-4.4.4.jar -->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+      <version>4.4.4</version>
+    </dependency>
+    <!--  gson-2.6.2.jar -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.6.2</version>
+    </dependency>
+    <!--  jackson-annotations-2.4.0.jar -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.4.0</version>
+    </dependency>
+    <!--  commons-lang-2.6.jar -->
+    <dependency>
+      <groupId>org.greports</groupId>
+      <artifactId>greports</artifactId>
+      <version>2.6</version>
+    </dependency>
+    <!--  alipay-sdk-java.jar -->
+    <dependency>
+      <groupId>alipay-sdk-java</groupId>
+      <artifactId>alipay-sdk-java</artifactId>
+      <version>1.0</version>
+      <systemPath>${lib.path}/alipay-sdk-java.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+    <!--  httpmime-4.5.2.jar -->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpmime</artifactId>
+      <version>4.5.2</version>
+    </dependency>
+    <!--  commons-httpclient-3.0.1.jar -->
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>3.0.1</version>
+    </dependency>
+    <!--  antlr4-runtime-4.2.jar -->
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr4-runtime</artifactId>
+      <version>4.2</version>
+    </dependency>
+    <!--  ezmorph.jar -->
+    <dependency>
+      <groupId>net.sf.ezmorph</groupId>
+      <artifactId>ezmorph</artifactId>
+      <version>1.0.5</version>
+    </dependency>
+    <!--  aliyun-java-sdk-sms-3.0.0-rc1.jar -->
+    <dependency>
+      <groupId>aliyun-java-sdk-sms</groupId>
+      <artifactId>aliyun-java-sdk-sms</artifactId>
+      <version>1.0</version>
+      <systemPath>${lib.path}/aliyun-java-sdk-sms-3.0.0-rc1.jar</systemPath>
+      <scope>system</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <finalName>diancan</finalName>
+    <outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+    <pluginManagement>
+      <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+          <configuration>
+            <skipTests>true</skipTests> <!-- 跳过测试 -->
+            <source>1.8</source>
+            <target>1.8</target>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <meminitial>128m</meminitial> <!-- 编译器使用的初始内存 -->
+            <maxmem>512m</maxmem> <!-- 编译器使用的最大内存 -->
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.2.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>

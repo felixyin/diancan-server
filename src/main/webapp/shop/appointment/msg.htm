@@ -1,0 +1,209 @@
+##tlayout("shop/layout.htm"){
+
+<div class="breadcrumbs">
+	<div class="col-xs-12 breadcrumbs_title">订单详情</div>
+</div>
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="base_item">
+				<table class="table table_new_dingdan">
+					<tr class="one">
+						<th>订单号</th>
+						<th>类型</th>
+						<th>会员</th>
+						<th>桌位号</th>
+						<th>用餐人数</th>
+						<th>小计</th>
+						<th>餐具费</th>
+						<th>桌位费</th>
+						<th>配送费</th>
+						<th>下单满减</th>
+						<th>总计</th>
+						<th>支付方式</th>
+						<th>状态</th>
+						<th>创建时间</th>
+					</tr>
+					<tr>
+						<td>${orders.code!}</td>
+						<td>
+							##if(orders.takeaway==0){
+								##if(orders.appointment==1){
+									预约订单
+								##}else{
+									堂食订单
+								##}
+							##}else{
+								##if(orders.take_own==0){
+									外卖配送
+								##}else if(orders.take_own==1){
+									外卖自提
+								##}
+							##}
+						</td>
+						<td>
+							<div><img src="${user.img_url!}" style="max-height: 50px; max-width: 50px;" /></div>
+							<div style="margin-top: 5px;">${user.name!}</div>
+						</td>
+						<td>
+							##if(tables.system==0){
+								${tables.title!}
+							##}
+						</td>
+						<td>${orders.user_number!}</td>
+						<td>${orders.subtotal!}</td>
+						<td>${orders.tableware_price!}</td>
+						<td>${orders.tables_price!}</td>
+						<td>${orders.takeaway_price!}</td>
+						<td>
+							##if(orders.coupon_title!=null && orders.coupon_title!=""){
+								${orders.coupon_title!}
+							##}
+						</td>
+						<td>${orders.grand_total!}</td>
+						<td>
+							##if(orders.payment!=null){
+								##if(orders.payment==0){
+									余额支付
+								##}else if(orders.payment==1){
+									微信支付
+								##}else if(orders.payment==2){
+									支付宝支付
+								##}else if(orders.payment==3){
+									现金支付
+								##}else if(orders.payment==4){
+									小程序支付
+								##}else if(orders.payment==5){
+									POS支付
+								##}
+							##}
+						</td>
+						<td>
+							##if(orders.closed==1){
+								已关闭
+							##}else{
+								##if(orders.status==0){
+									待付款
+								##}else if(orders.status==1){
+									已付款
+								##}else if(orders.status==9){
+									已完成
+								##}else if(orders.status==2){
+									配送中
+								##}
+							##}
+						</td>
+						<td>${orders.create_date!,dateFormat='yyyy-MM-dd HH:mm'}</td>
+					</tr>
+					##if(orders.remark!=null && orders.remark!=""){
+						<tr><td colspan="13">订单备注：${orders.remark!}</td></tr>
+					##}
+					##if(orders.takeaway==1){
+						<tr>
+							<td colspan="13">
+								##if(orders.appointment==1){
+									${orders.take_name!} | ${orders.take_mobile!} | 到店时间：${orders.take_date!,dateFormat='yyyy-MM-dd HH:mm'}
+								##}else{
+									##if(orders.take_own==0){
+										${orders.take_name!} | ${orders.take_mobile!} | 配送地址：${orders.take_address!}
+									##}else{
+										${orders.take_name!} | ${orders.take_mobile!} | 到店时间：${orders.take_date!,dateFormat='yyyy-MM-dd HH:mm'}
+									##}
+								##}
+							</td>
+						</tr>
+					##}
+				</table>
+			</div>
+		</div>
+		<div class="col-xs-12">
+			<div class="table-responsive base_item gonggao">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th style="width: 30%">菜品</th>
+							<th>数量</th>
+							<th>单价</th>
+							<th>小计</th>
+							<th>创建时间</th>
+							<th>备注</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						##for(_item in item_list!){
+							<tr class="item_goods">
+								<td>
+									<div><img src="${_item.dishes_img_url!}" style="width: 50px;" /></div>
+									<div style="margin-top: 5px;">
+										${_item.dishes_title!}
+										##if(_item.dishes_format_title_1!="默认"){
+											 | ${_item.dishes_format_title_1!}
+										##}
+										##if(_item.dishes_format_title_2!="默认"){
+											 | ${_item.dishes_format_title_2!}
+										##}
+										##if(_item.dishes_format_title_3!="默认"){
+											 | ${_item.dishes_format_title_3!}
+										##}
+									</div>
+								</td>
+								<td>${_item.item_number!}</td>
+								<td>${_item.item_price!}</td>
+								<td>${_item.item_subtotal!}</td>
+								<td>${_item.create_date!,dateFormat='yyyy-MM-dd HH:mm'}</td>
+								<td>
+									##if(_item.type==2){
+										[加餐]
+									##}
+									##if(_item.status==0){
+										[已退餐]
+									##}
+								</td>
+								<td>
+									##if(orders.takeaway==0 && orders.closed==0 && orders.status==0 && _item.status==1){
+										<a href="javascript:tuican(${orders.id!}, ${_item.id!})">退餐</a>
+									##}
+								</td>
+							</tr>
+						##}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-xs-12" style="margin-top: 25px;">
+			<div class="table-responsive base_item">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>创建时间</th>
+							<th>日志</th>
+						</tr>
+					</thead>
+					<tbody>
+						##for(_item in log_list!){
+							<tr>
+								<td>${_item.create_date!,dateFormat='yyyy-MM-dd HH:mm'}</td>
+								<td>${_item.content!}</td>
+							</tr>
+						##}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+function tuican(oid, oiid){
+	
+	if(confirm("确定要退餐该条记录吗？")){
+		$.post("/shop/tangshi/tuican",{oid:oid, oiid:oiid},function(data){
+			alert(data.msg);
+			if(data.success){
+				location.reload(true);
+			}
+		});
+	}
+}
+</script>
+##}

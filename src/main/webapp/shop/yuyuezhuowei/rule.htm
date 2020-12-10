@@ -1,0 +1,139 @@
+<link rel="stylesheet" href="/shop/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="/shop/css/style.css" />
+
+<script src="/www/script/jquery.min.js"></script>
+<script src="/www/script/jquery.form.js"></script>
+
+<div class="page-content popup">
+	<div class="page-header">
+		<h1>预约设置</h1>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<form class="form-horizontal" action="/shop/yuyuezhuowei/doRule" method="post" id="submit_form">
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>到店时间</label>
+					<div class="col-xs-12 time_chechbox_bora_r">
+						<div>
+							##if(time_1 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="6:00" name="daodianshijian"/><span >6:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="6:00" name="daodianshijian"/><span >6:00</span></label>
+							##}
+							##if(time_2 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="7:00" name="daodianshijian"/><span >7:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="7:00" name="daodianshijian"/><span >7:00</span></label>
+							##}
+							##if(time_3 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="8:00" name="daodianshijian"/><span >8:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="8:00" name="daodianshijian"/><span >8:00</span></label>
+							##}
+							##if(time_4 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="9:00" name="daodianshijian"/><span >9:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="9:00" name="daodianshijian"/><span >9:00</span></label>
+							##}
+							##if(time_5 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="10:00" name="daodianshijian"/><span >10:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="10:00" name="daodianshijian"/><span >10:00</span></label>
+							##}
+							##if(time_6 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="11:00" name="daodianshijian"/><span style="margin-left: 5px;">11:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="11:00" name="daodianshijian"/><span style="margin-left: 5px;">11:00</span></label>
+							##}
+							##if(time_7 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="12:00" name="daodianshijian"/><span >12:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="12:00" name="daodianshijian"/><span >12:00</span></label>
+							##}
+						</div>
+						<div>
+							##if(time_8 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="13:00" name="daodianshijian"/><span >13:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="13:00" name="daodianshijian"/><span >13:00</span></label>
+							##}
+							##if(time_9 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="14:00" name="daodianshijian"/><span >14:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="14:00" name="daodianshijian"/><span >14:00</span></label>
+							##}
+							##if(time_10 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="15:00" name="daodianshijian"/><span >15:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="15:00" name="daodianshijian"/><span >15:00</span></label>
+							##}
+							##if(time_11 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="16:00" name="daodianshijian"/><span >16:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="16:00" name="daodianshijian"/><span >16:00</span></label>
+							##}
+							##if(time_12 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="17:00" name="daodianshijian"/><span >17:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="17:00" name="daodianshijian"/><span >17:00</span></label>
+							##}
+							##if(time_13 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="18:00" name="daodianshijian"/><span >18:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="18:00" name="daodianshijian"/><span >18:00</span></label>
+							##}
+						</div>
+						<div>
+							##if(time_14 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="19:00" name="daodianshijian"/><span >19:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="19:00" name="daodianshijian"/><span >19:00</span></label>
+							##}
+							##if(time_15 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="20:00" name="daodianshijian"/><span >20:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="20:00" name="daodianshijian"/><span >20:00</span></label>
+							##}
+							##if(time_16 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="21:00" name="daodianshijian"/><span >21:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="21:00" name="daodianshijian"/><span >21:00</span></label>
+							##}
+							##if(time_17 == 1){
+								<label style="width: 75px;"><input type="checkbox" checked="checked" value="22:00" name="daodianshijian"/><span >22:00</span></label>
+							##}else{
+								<label style="width: 75px;"><input type="checkbox" value="22:00" name="daodianshijian"/><span >22:00</span></label>
+							##}
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div style="width:100%;text-align: center;">
+	<button type="button" class="btn btn-info" onclick="return submitForm()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-ok bigger-110"></i>确定
+	</button>
+	&nbsp;&nbsp;
+	<button type="reset" class="btn" onclick="parent.hideAlert()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-undo bigger-110"></i>取消
+	</button>
+</div>
+<script>
+function submitForm(){
+	
+	$('#submit_form').ajaxSubmit({
+	    success: function(data){
+	    	alert(data.msg);
+	    	if(data.success){
+	    		parent.location.reload(true);
+	    	}
+	    }
+	});
+}
+</script>

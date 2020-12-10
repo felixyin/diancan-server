@@ -1,0 +1,222 @@
+##tlayout("shop/layout.htm"){
+
+<div class="breadcrumbs">
+	<div class="col-xs-12 breadcrumbs_title">订单号：${orders.code!}</div>
+</div>
+<div class="page-content clearfix">
+	<div class="base_item shopping_wrap">
+		<div class="row">
+			<div class="col-xs-2 shopping_left" id="shopping_left">
+				##if(exist("dtid")){
+	          		<a class="item" href="/shop/tangshi/shopping?id=${tables.id!}">全部菜品</a>
+	          	##}else{
+	          		<a class="item cur" href="/shop/tangshi/shopping?id=${tables.id!}">全部菜品</a>
+	          	##}
+	          	##for(_item in dishes_type_list!){
+	          		##if(exist("dtid") && _item.id==dtid){
+	          			<a class="item cur" href="/shop/tangshi/shopping?dtid=${_item.id!}&id=${tables.id!}">${_item.title!}（${_item.dishes_number!0}）</a>
+	          		##}else{
+	          			<a class="item" href="/shop/tangshi/shopping?dtid=${_item.id!}&id=${tables.id!}">${_item.title!}（${_item.dishes_number!0}）</a>
+	          		##}
+	          	##}
+			</div>
+			<div class="col-xs-6 shopping_middle" id="shopping_middle">
+				<div class="row dishes_item_wrap">
+					##for(_item in dishes_list!){
+						<div class="dishes_item" style="width: 20%;">
+							<div class="dishes_item_content">
+								<div class="dishes_item_img">
+									<img class="img" src="${_item.img_url!}" />
+									##if(_item.status==1){
+										<div class="add_caipin_hover">
+											<img src="/shop/images/add_img.png" onclick="showAlert('/shop/order/format?id=${_item.id!}')"/>
+										</div>
+									 ##}else{
+									 	<div class="add_caipin_err">
+									 		<img src="/shop/images/shouqing.png" />
+									 	</div>
+									 ##}
+								</div>
+								<div class="dishes_item_text">
+									<div class="title">${_item.title!}</div>
+									<div class="price_stock clearfix">
+										<span class="fl">￥${_item.price!}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+			        ##}
+		        </div>
+			</div>
+			##if(shopping_list!=null && shopping_list.~size!=0){
+				<div class="col-xs-4 shopping_right" id="shopping_cart">
+					<div class="shopping_title clearfix">
+						<div class="fl">购物车</div>
+						<a class="fr" href="javascript:deleteAll()">清空购物车</a>
+					</div>
+					<div class="shopping_list_wrap" id="shopping_right">
+						##for(_item in shopping_list!){
+							<div class="shopping_list_item">
+								<img src="${_item.dishes_img_url!}" />
+								<div class="shopping_list_item_content">
+									<div class="title_price clearfix">
+										<span class="fl">${_item.dishes_title!}</span>
+										<span class="fr">￥${_item.dishes_format.price!}</span>
+									</div>
+									<div class="format">
+										##if(_item.dishes_shuxing_number == 1){
+											${_item.dishes_format_title_1!}
+										##}else if(_item.dishes_shuxing_number == 2){
+											${_item.dishes_format_title_1!} | ${_item.dishes_format_title_2!}
+										##}else{
+											${_item.dishes_format_title_1!} | ${_item.dishes_format_title_2!} | ${_item.dishes_format_title_3!}
+										##}
+									</div>
+									<div class="bottom clearfix">
+										<a href="javascript:deleted(${_item.id!})" class="del">删除</a>
+										<div class="jia_jian">
+											<img src="/shop/images/reduce_icon.png" onclick="reduce(this)">
+											<input type="number" value="${_item.number!}" class="item_input" data-id="${_item.id!}" onchange="changeNumber(this)" />
+											<img src="/shop/images/add_icon.png" onclick="add(this)">
+										</div>
+									</div>
+								</div>
+							</div>
+						##}
+					</div>
+					<div class="shopping_bottom clearfix">
+						<div class="left">小计：<span style="clear: red;font-weight: bold;font-size: 18px;">￥<span id="subtotal">${subtotal!}</span></span></div>
+						<div class="right" onclick="showAlert('/shop/tangshi/remark?id=${orders.id!}')">立即下单</div>
+					</div>
+				</div>
+				<div class="col-xs-4 shopping_right" id="shopping_cart_empty" style="display: none;">
+					<div class="cart_kong">
+						<img src="/shop/images/cart_icon.png"/>
+						<p>购物车为空</p>
+					</div>
+				</div>
+			##}else{
+				<div class="col-xs-4 shopping_right" id="shopping_cart" style="display: none;">
+					<div class="shopping_title clearfix">
+						<div class="fl">购物车</div>
+						<a class="fr" href="javascript:deleteAll()">清空购物车</a>
+					</div>
+					<div class="shopping_list_wrap" id="shopping_right"></div>
+					<div class="shopping_bottom clearfix">
+						<div class="left">小计：<span style="clear: red;font-weight: bold;font-size: 18px;">￥<span id="subtotal">0.0</span></span></div>
+						<div class="right" onclick="showAlert('/shop/tangshi/remark?id=${orders.id!}')">立即下单</div>
+					</div>
+				</div>
+				<div class="col-xs-4 shopping_right" id="shopping_cart_empty">
+					<div class="cart_kong">
+						<img src="/shop/images/cart_icon.png"/>
+						<p>购物车为空</p>
+					</div>
+				</div>
+			##}
+		</div>
+	</div>
+</div>
+<script src="/shop/assets/js/jquery.nicescroll.min.3.6.8.js"></script>
+<script>
+$(document).ready(function(){
+	
+	$('#shopping_left').niceScroll();
+	$('#shopping_middle').niceScroll();
+	$("#shopping_right").niceScroll();
+});
+function deleted(id){
+	
+	if(confirm("确定要删除该条记录吗？")){
+		$.post("/shop/order/deleted",{id:id},function(data){
+			if(data.success){
+				refreshShopping();
+			}else{
+				alert(data.msg);
+			}
+		});
+	}
+}
+function deleteAll(){
+	
+	if(confirm("确定要清空购物车吗？")){
+		$.post("/shop/order/deleteAll",{},function(data){
+			if(data.success){
+				refreshShopping();
+			}else{
+				alert(data.msg);
+			}
+		});
+	}
+}
+function add(object){
+	
+	$(object).parent().find('.item_input').val($(object).parent().find('.item_input').val() * 1 + 1);
+	changeNumber($(object).parent().find('.item_input'));
+}
+function reduce(object){
+	
+	if($(object).parent().find('.item_input').val() * 1 > 1){
+		$(object).parent().find('.item_input').val($(object).parent().find('.item_input').val() * 1 - 1);
+		changeNumber($(object).parent().find('.item_input'));
+	}
+}
+function changeNumber(object){
+	
+	$.post("/shop/order/changeNumber",{id:$(object).data('id'), number:$(object).val()},function(data){
+		if(data.success){
+			refreshShopping();
+		}else{
+			alert(data.msg);
+		}
+	});
+}
+function refreshShopping(){
+	
+	$.post("/shop/order/refreshShopping",{},function(data){
+		if(data.success){
+			if(data.shopping_list!=null && data.shopping_list.length!=0){
+				var html="";
+				$.each(data.shopping_list,function(index, array){
+					html+='<div class="shopping_list_item">';
+						html+='<img src="' + array["dishes_img_url"] + '" />';
+						html+='<div class="shopping_list_item_content">';
+							html+='<div class="title_price clearfix">';
+								html+='<span class="fl">' + array["dishes_title"] + '</span>';
+								html+='<span class="fr">￥' + array["dishes_format"]["price"] + '</span>';
+							html+='</div>';
+							html+='<div class="format">';
+							if(array["dishes_shuxing_number"] == 1){
+								html+=array["dishes_format_title_1"];
+							}else if(array["dishes_shuxing_number"] == 2){
+								html+=array["dishes_format_title_1"] + " | " + array["dishes_format_title_2"];
+							}else{
+								html+=array["dishes_format_title_1"] + " | " + array["dishes_format_title_2"] + " | " + array["dishes_format_title_3"];
+							}
+							html+='</div>';
+							html+='<div class="bottom clearfix">';
+								html+='<a href="javascript:deleted(' + array["id"] + ')" class="del">删除</a>';
+								html+='<div class="jia_jian">';
+									html+='<img src="/shop/images/reduce_icon.png" onclick="reduce(this)">';
+									html+='<input type="number" value="' + array["number"] + '" class="item_input" data-id="' + array["id"] + '" onchange="changeNumber(this)" />';
+									html+='<img src="/shop/images/add_icon.png" onclick="add(this)">';
+								html+='</div>';
+							html+='</div>';
+						html+='</div>';
+					html+='</div>';
+				});
+				$("#shopping_cart_empty").hide();
+				$("#shopping_right").html(html);
+				$("#subtotal").text(data.subtotal);
+				$("#shopping_cart").show();
+			}else{
+				$("#shopping_cart").hide();
+				$("#shopping_cart_empty").show();
+			}
+		}else{
+			location.reload(true);
+		}
+	});
+}
+</script>
+##}

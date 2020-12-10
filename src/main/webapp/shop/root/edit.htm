@@ -1,0 +1,70 @@
+<link rel="stylesheet" href="/shop/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="/shop/css/style.css" />
+
+<script src="/www/script/jquery.min.js"></script>
+<script src="/www/script/jquery.form.js"></script>
+
+<div class="page-content popup">
+	<div class="page-header">
+		<h1>编辑员工</h1>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<form class="form-horizontal" action="/shop/root/update" method="post" id="submit_form">
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>姓名</label>
+					<div class="col-xs-12">
+						<input type="text" name="name" value="${shop_admin.name!}" class="col-xs-10" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>登录手机号</label>
+					<div class="col-xs-12">
+						<input type="text" name="email" value="${shop_admin.email!}" class="col-xs-10" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>菜单权限</label>
+					<div class="col-xs-12">
+						##for(_item in menu_list!){
+							<label style="padding-right: 5px;">
+								##if(_item.checked == 1){
+									<input type="checkbox" checked="checked" name="smids" value="${_item.id!}" />&nbsp;${_item.title!}
+								##}else{
+									<input type="checkbox" name="smids" value="${_item.id!}" />&nbsp;${_item.title!}
+								##}
+							</label>
+						##}
+					</div>
+				</div>
+				<input name="id" value="${shop_admin.id!}" type="hidden" />
+			</form>
+		</div>
+	</div>
+</div>
+<div style="width:100%;text-align: center;">
+	<button type="button" class="btn btn-info" onclick="return submitForm()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-ok bigger-110"></i>确定
+	</button>
+	&nbsp;&nbsp;
+	<button type="reset" class="btn" onclick="parent.hideAlert()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-undo bigger-110"></i>取消
+	</button>
+</div>
+<script>
+function submitForm(){
+	
+	$('#submit_form').ajaxSubmit({
+	    success: function(data){
+	    	alert(data.msg);
+	    	if(data.success){
+	    		parent.location.reload(true);
+	    	}
+	    }
+	});
+}
+</script>

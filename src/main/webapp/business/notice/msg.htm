@@ -1,0 +1,23 @@
+##tlayout("business/layout.htm"){
+
+<div class="breadcrumbs">
+	<div class="col-xs-12 breadcrumbs_title">
+		<div class="breadcrumbs_list">
+			<a href="/business/article">文章管理</a>
+			<a href="/business/notice" class="cur">平台公告</a>
+			<a href="/business/carousel">轮播管理</a>
+		</div>
+	</div>
+</div>
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12" style="text-align: center;">
+			<div class="base_item">
+				<h3>${notice.title!}</h3>
+				<div>${notice.create_date!,dateFormat='yyyy-MM-dd HH:mm'}</div>
+				<div style="width: 80%;text-align: left;margin: auto;margin-top: 25px;">${notice.content!}</div>
+			</div>
+		</div>
+	</div>
+</div>
+##}

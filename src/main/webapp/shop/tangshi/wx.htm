@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="/shop/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="/shop/css/style.css" />
+
+<script src="/www/script/jquery.min.js"></script>
+<script src="/www/script/jquery.form.js"></script>
+
+<div class="page-content popup">
+	<div class="page-header">
+		<h1>订单付款</h1>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="tip_content">
+				<img src="/shop/images/saoma_icon.png"/>
+				<div class="title">微信付款</div>
+				<div class="content">请用扫描枪扫描微信付款码</div>
+			</div>
+			<input class="transparent_class" type="text" name="number" id="number" autofocus="autofocus" />
+		</div>
+	</div>
+</div>
+<div style="width:100%;text-align: center;">
+	<button type="reset" class="btn" onclick="parentRefresh()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-undo bigger-110"></i>取消
+	</button>
+</div>
+<script>
+$(function(){
+	
+    $("#number").focus();
+    $("body").click(function(){
+    	$("#number").focus();
+    });
+});  
+$(document).keydown(function(event){
+	
+    var keyCode=event.keyCode;  
+    if (keyCode==13){  
+        var number=$("#number").val();
+        if(number==null || number==""){
+        	alert("请重新扫码");
+        	return;
+        }
+        $.post("/shop/tangshi/doWx",{id:"${orders.id!}",number:number},function(data){
+        	alert(data.msg);
+        	parent.location.reload(true);
+        });
+    }  
+});
+function parentRefresh(){
+	
+	parent.hideAlert();
+	parent.window.location.reload(true);
+}
+</script>

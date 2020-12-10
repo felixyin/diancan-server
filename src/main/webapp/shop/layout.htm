@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>${_common.baseTitle()}门店端</title>
+	<link href="/shop/assets/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/shop/assets/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="/shop/assets/css/ace.min.css" />
+	<link rel="stylesheet" href="/shop/assets/css/ace-rtl.min.css" />
+	<link rel="stylesheet" href="/shop/assets/css/ace-skins.min.css" />
+	<link rel="stylesheet" href="/shop/css/style.css" />
+	<link rel="stylesheet" href="/shop/css/icon.css"/>
+	<script src="/www/script/jquery.min.js"></script>
+	<script src="/www/script/jquery.form.js"></script>
+	<script src="/shop/assets/js/ace-extra.min.js"></script>
+	<script src="/shop/assets/js/bootstrap.min.js"></script>
+	<script src="/shop/assets/js/typeahead-bs2.min.js"></script>
+	<script src="/shop/assets/js/ace-elements.min.js"></script>
+	<script src="/shop/assets/js/ace.min.js"></script>
+	<script src="/shop/assets/js/jquery.nicescroll.min.js"></script>
+</head>
+<body>
+<div class="main-container" id="main-container">
+	<div class="main-container-inner">
+		<a class="menu-toggler" id="menu-toggler" href="javascript:void(0)">
+			<span class="menu-text"></span>
+		</a>
+		<div class="sidebar sidebar_fixed" id="sidebar">
+			<div class="sidebar_fixed_content">
+				<div class="sidebar_title">
+					<div class="name">
+						<a href="/shop/dashboard" >
+							<img src="/shop/images/logo_01.png" />
+							<div class="layout_left">${shop.title!}</div>
+						</a>	
+						<div class="clearfix shop_admin_name_wrap">
+							<span class="shop_admin_name">${shop_admin.name!}</span>
+							<a href="/shop/layout" class="tuichu">退出</a>
+						</div>
+					</div>
+				</div>
+				<ul class="nav nav-list">
+					<li>
+						<a href="/shop/dashboard">
+							<span class="menu-text index_btn_r a">首页</span>
+						</a>
+					</li>
+					##for(_item in session.shop_admin_menu!){
+						##if(_item.title != "工作台"){
+							<li>
+								<a href="${_item.url!}">
+									<span class="${_item.icon!}"></span>
+									<span class="menu-text">${_item.title!}</span>
+								</a>
+							</li>
+						##}else{
+							<li>
+								<a href="${_item.url!}">
+									<span class="menu-text index_btn_r">${_item.title!}</span>
+								</a>
+							</li>
+						##}
+					##}
+					##if(shop_admin.type==1){
+						<li id="root">
+							<a href="/shop/root">
+								<span class="left_icon left_super_icon_yg"></span>
+								<span class="menu-text">员工管理</span>
+							</a>
+						</li>
+					##}
+					<li>
+						<a href="javascript:showAlert('/shop/system/editPwd')">
+							<span class="left_icon app-sidebar__icon--profile"></span>
+							<span class="menu-text">账户安全</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="main-content">
+			${layoutContent}
+		</div>
+	</div>
+	<a href="javascript:void(0)" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse" style="position: fixed;">
+		<i class="icon-double-angle-up icon-only bigger-110"></i>
+	</a>
+</div>
+<div class="tanchu_bg" id="tanchu_bg">
+	<iframe id="tanchu_ifream" src="/shop/blank" scrolling="no" allowtransparency="true"></iframe>
+</div>
+<script>
+$(document).ready(function(){
+	
+	if("${url_1!}"=="/shop/tables" || "${url_1!}"=="/shop/tables/type"){
+		$("#sidebar").find("a").each(function(){
+			if($(this).attr("href")=="/shop/tables"){
+				$(this).parent().addClass("active");
+			}
+		});
+	}else{
+		$("#sidebar").find("a").each(function(){
+			if($(this).attr("href")=="${url_1!}" || $(this).attr("href")=="${url!}"){
+				$(this).parent().addClass("active");
+			}
+		});
+	}
+	$(".sidebar_fixed").niceScroll();
+});
+function hideAlert(){
+	
+	$("#tanchu_bg").hide();
+	$("#tanchu_ifream").attr("src","/shop/blank");
+}
+function showAlert(url){
+	
+	$("#tanchu_ifream").attr("src",url);
+	$("#tanchu_bg").show();
+}
+</script>
+</body>
+</html>

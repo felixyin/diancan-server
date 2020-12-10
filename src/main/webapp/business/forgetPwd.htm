@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>${_common.baseTitle()}商家端</title>
+	<link rel="stylesheet" href="/www/css/login.css" />
+	<script src="/www/script/jquery.min.js"></script>
+	<script src="/www/script/jquery.form.js"></script>
+</head>
+<body>
+<div class="bg-wrap">
+	<div class="main-cont-wrap login-model">
+		<h2 class="shop_logo"><i>${_common.baseTitle()}</i> 商家端</h2>
+		<div class="main-cont-c">
+			<form action="/business/updatePwd" method="post" id="submit_form">
+				<div class="form-title g-mb40">
+					<span class="s-txt-c s-fs20">忘记密码</span>
+					<p class="f-fr">
+						<a class="s-txt-gy1 s-fs14 g-mr5 g-vta-m register" href="/business">商家登录</a>
+						<img src="/business/images/arrow.svg" />
+					</p>
+				</div>
+				<div class="ui-form-item g-mb30">
+					<span class="ui-form-txt">手机号</span>
+					<input type="text" name="email" id="email" class="ui-form-input" placeholder="请填写登录手机号" />
+				</div>
+				<div class="ui-form-item g-mb30">
+					<span class="ui-form-txt">验证码</span>
+					<input type="text" name="code" id="code" class="ui-form-input" placeholder="请输入图片验证码" />
+					<img src="/business/code" class="yzm_img" onclick="changeCodes(this)" id="changeCode" />
+				</div>
+				<div class="ui-form-item g-mb30">
+					<span class="ui-form-txt">短信验证码</span>
+					<input class="ui-form-input" id="mobile_code" name="mobile_code" placeholder="请填写短信验证码" type="text" />
+					<a class="s-txt-c getcode ui-getcode" href="javascript:void(0);" id="send_code" title="获取验证码">获取验证码</a>
+				</div>
+				<div class="ui-form-btn">
+					<input type="button" class="ui-button login-btn" value="确认找回" onclick="submitForm()" />
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="footer-wrap">
+		<p class="s-tac s-txt-gy1">&copy; 2017 Simple Login Form. All Rights Reserved | Design by <a href="http://www.xiaodaofuli.com" target="_blank">青岛蓝图科技网络有限公司</a></p>
+	</div>
+</div>
+<script>
+function changeCodes(object){
+	
+	$(object).attr("src", "/business/code?t=" + Math.random());
+}
+//验证码显示控制
+var timeOut;
+$(document).ready(function(){
+	
+	$("#send_code").click(function(){
+		if($(this).hasClass('vcode_img_btn_disabled')){
+			return;
+		}
+		countDown();
+		$.post("/business/sendCode",{mobile:$("#email").val(),code:$("#code").val()},function(data){
+			if(data.success){
+				
+			}else{
+				clearTimeout(timeOut);
+				var el=$('#send_code');
+				el.text(el.attr('title'));
+				el.removeClass('vcode_img_btn_disabled');
+				alert(data.msg);
+	        	return;
+			}
+		});
+	});
+});
+function countDown(){
+	
+	var el=$('#send_code');
+	var val=el.text();
+	var numStr=val.match(/.*\((.*)\)/);
+	if(numStr){
+		var num=parseInt(numStr[1]);
+		if(num && num>=1){
+			num--;
+			var str="(" + num + ')s重发';
+			el.text(str);
+			timeOut=setTimeout(countDown, 1000);
+		}else{
+			el.text(el.attr('title'));
+			el.removeClass('vcode_img_btn_disabled');
+		}
+	}else{
+		el.addClass('vcode_img_btn_disabled');
+		var str='(120)s重发';
+		el.text(str);
+		timeOut=setTimeout(countDown,1000);
+	}
+}
+function submitForm(){
+	
+	$('#submit_form').ajaxSubmit({
+	    success: function(data){
+	    	alert(data.msg);
+	    	if(data.success){
+	    		window.location.href="/business";
+	    	}else{
+	    		$(".yzm_img").attr("src", "/business/code?t="+Math.random());
+	    		var el=$('#send_code');
+	    		el.text(el.attr('title'));
+				el.removeClass('vcode_img_btn_disabled');
+				clearTimeout(timeOut);
+	        	return;
+	    	}
+	    }
+	});
+}	
+</script>
+</body>
+</html>

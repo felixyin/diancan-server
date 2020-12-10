@@ -1,0 +1,191 @@
+##tlayout("admin/layout.htm"){
+
+<div class="breadcrumbs">
+	<div class="col-xs-4 breadcrumbs_title">商家管理</div>
+	<div class="col-xs-8" style="text-align: right;">
+		<form action="/admin/business/index" method="post" id="search_form">
+			<select style="height:35px;vertical-align: top;" name="status">
+				<option value="">全部</option>
+				<option value="0">禁用</option>
+				<option value="1">启用</option>
+			</select>
+			<input type="text" placeholder="请输入搜索内容" name="content" value="${content!}" style="height: 35px;margin-left: 5px;" />
+			<button class="btn btn-sm" onclick="$('#search_form').submit()" type="button">确定</button>
+		</form>
+	</div>
+</div>
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>编号</th>
+							<th>标题</th>
+							<th>负责人</th>
+							<th>登录账号</th>
+							<th style="width: 25%;">授权</th>
+							<th>服务商</th>
+							<th>堂食</th>
+							<th>外卖</th>
+							<th>预约</th>
+							<th>充值</th>
+							<th>菜品</th>
+							<th>状态</th>
+							<th>创建时间</th>
+							<th>到期时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						##for(_item in results.list!){
+						<tr>
+							<td>${_item.code!}</td>
+							<td>${_item.title!}</td>
+							<td>${_item.name!} | ${_item.telephone!}</td>
+							<td>${_item.business_email!}</td>
+							<td>
+								##if(_item.authorize_status==0){
+									未授权
+								##}else{
+									<div>已授权</div>
+									##if(_item.code_version!=null && _item.code_version!=""){
+										<div style="margin-top: 5px;">版本号：${_item.code_version!}</div>
+										<div style="margin-top: 5px;">
+											##if(_item.code_status==0){
+												审核成功
+											##}else if(_item.code_status==1){
+												审核失败
+												<div style="margin-top: 5px;">${_item.code_reason!}</div>
+											##}else{
+												审核中
+											##}
+										</div>
+									##}
+								##}
+							</td>
+							<td>
+								##if(_item.fuwushang==0){
+									非服务商
+								##}else{
+									服务商
+								##}
+							</td>
+							<td><a href="/admin/tangshi?bid=${_item.id!}">${_item.tangshi_number!}</a></td>
+							<td><a href="/admin/takeaway?bid=${_item.id!}">${_item.takeaway_number!}</a></td>
+							<td><a href="/admin/appointment?bid=${_item.id!}">${_item.appointment_number!}</a></td>
+							<td><a href="/admin/charge?bid=${_item.id!}">${_item.charge_number!}</a></td>
+							<td><a href="/admin/dishes?bid=${_item.id!}">${_item.dishes_number!}</a></td>
+							<td>
+								##if(_item.shenhe==0){
+									待审核
+								##}else{
+									##if(_item.status==0){
+										禁用
+									##}else if(_item.status==1){
+										启用
+									##}
+								##}
+							</td>
+							<td>${_item.create_date!,dateFormat='yyyy-MM-dd HH:mm'}</td>
+							<td>${_item.invalid_date!,dateFormat='yyyy-MM-dd HH:mm:ss'}</td>
+							<td style="width:100px;">
+								<div class="btn-group">
+									<button class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
+										操作<span class="icon-caret-down icon-on-right"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-info pull-right">
+										<li><a href="javascript:showAlert('/admin/business/invalid?id=${_item.id!}')">到期时间</a></li>
+										<li><a href="javascript:showAlert('/admin/business/editPwd?id=${_item.id!}')">重置密码</a></li>
+										<li><a href="/admin/tangshi?bid=${_item.id!}">堂食订单</a></li>
+										<li><a href="/admin/takeaway?bid=${_item.id!}">外卖订单</a></li>
+										<li><a href="/admin/appointment?bid=${_item.id!}">预约订单</a></li>
+										<li><a href="/admin/charge?bid=${_item.id!}">充值订单</a></li>
+										<li><a href="/admin/dishes?bid=${_item.id!}">菜品管理</a></li>
+										<li><a href="javascript:tijiaoshenhe(${_item.id!}, '提交审核')">提交审核</a></li>
+										<li><a href="javascript:shenhechehui(${_item.id!}, '审核撤回')">审核撤回</a></li>
+										##if(_item.fuwushang==0){
+											<li><a href="javascript:changeFuwushang(${_item.id!}, 1, '使用服务商')">使用服务商</a></li>
+										##}else{
+											<li><a href="javascript:changeFuwushang(${_item.id!}, 0, '取消服务商')">取消服务商</a></li>
+										##}
+										##if(_item.shenhe==0){
+											<li><a href="javascript:changeStatus(${_item.id!}, 1, '通过')">通过</a></li>
+										##}else{
+											##if(_item.status==1){
+												<li><a href="javascript:changeStatus(${_item.id!}, 0, '禁用')">禁用</a></li>
+											##}else if(_item.status==0){
+												<li><a href="javascript:changeStatus(${_item.id!}, 1, '启用')">启用</a></li>
+											##}
+										##}
+										<li><a href="javascript:changeStatus(${_item.id!}, 9, '删除')">删除</a></li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+						##}
+					</tbody>
+				</table>
+			</div>
+			##if(totalPage>1){
+				<div class="fenye">
+					<#_pagination page="${results!}" params="content,status">
+						<ul id="Pagination"></ul>
+					</#_pagination>
+				</div>
+			##}
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function(){
+	
+	$("select[name='status']").val("${status!}");
+});
+function changeStatus(id, status, msg){
+	
+	if(confirm("确定要" + msg + "该条记录吗？")){
+		$.post("/admin/business/changeStatus",{id:id,status:status},function(data){
+			alert(data.msg);
+			if(data.success){
+				location.reload(true);
+			}
+		});
+	}
+}
+function changeFuwushang(id, fuwushang, msg){
+	
+	if(confirm("确定要" + msg + "该条记录吗？")){
+		$.post("/admin/business/changeFuwushang",{id:id,fuwushang:fuwushang},function(data){
+			alert(data.msg);
+			if(data.success){
+				location.reload(true);
+			}
+		});
+	}
+}
+function shenhechehui(id, msg){
+	
+	if(confirm("确定要" + msg + "该条记录吗？")){
+		$.post("/admin/business/shenhechehui",{id:id},function(data){
+			alert(data.msg);
+			if(data.success){
+				location.reload(true);
+			}
+		});
+	}
+}
+function tijiaoshenhe(id, msg){
+	
+	if(confirm("确定要" + msg + "该条记录吗？")){
+		$.post("/admin/business/tijiaoshenhe",{id:id},function(data){
+			alert(data.msg);
+			if(data.success){
+				location.reload(true);
+			}
+		});
+	}
+}
+</script>
+##}

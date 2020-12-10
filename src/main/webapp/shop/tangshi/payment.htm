@@ -1,0 +1,90 @@
+<link rel="stylesheet" href="/shop/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="/shop/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="/shop/css/style.css" />
+
+<script src="/www/script/jquery.min.js"></script>
+<script src="/www/script/jquery.form.js"></script>
+
+<div class="page-content popup">
+	<div class="page-header">
+		<h1>订单付款</h1>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<form class="form-horizontal" style="margin-left: 25px;">
+				<div class="form-group">
+					<label class="col-xs-2 control-label" style="width: 100px;min-width: 100px;">小计：</label>
+					<label class="col-xs-6 control-label">￥${orders.subtotal!}</label>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 control-label" style="width: 100px;min-width: 100px;">餐具费：</label>
+					<label class="col-xs-6 control-label">￥${orders.tableware_price!}</label>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 control-label" style="width: 100px;min-width: 100px;">桌位费：</label>
+					<label class="col-xs-6 control-label">￥${orders.tables_price!}</label>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 control-label" style="width: 100px;min-width: 100px;">配送费：</label>
+					<label class="col-xs-6 control-label">￥${orders.takeaway_price!}</label>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 control-label" style="width: 100px;min-width: 100px;">订单满减：</label>
+					<label class="col-xs-6 control-label">￥${orders.coupon_saving!}</label>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 control-label" style="width: 100px;min-width: 100px;">总计：</label>
+					<label class="col-xs-6 control-label">￥${orders.grand_total!}</label>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 control-label"><span style="color: #f00">*</span>支付方式</label>
+					<div class="col-xs-12">
+						<label><input type="radio" name="payment" value="0" checked="checked" /> 余额支付</label>
+		                <label style="margin-left: 10px;"><input type="radio" name="payment" value="1" /> 微信支付</label>
+						<label style="margin-left: 10px;"><input type="radio" name="payment" value="2" /> 支付宝支付</label>
+						<label style="margin-left: 10px;"><input type="radio" name="payment" value="3" /> 现金支付</label>
+						<label style="margin-left: 10px;"><input type="radio" name="payment" value="5" /> POS支付</label>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div style="width:100%;text-align: center;">
+	<button type="button" class="btn btn-info" onclick="submitForm()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-ok bigger-110"></i>确定
+	</button>
+	&nbsp;&nbsp;
+	<button type="reset" class="btn" onclick="parentRefresh()" style="padding:0px 5px;margin-top:5px;">
+		<i class="icon-undo bigger-110"></i>取消
+	</button>
+</div>
+<script>
+function submitForm(){
+	
+	if($("input[name='payment']:checked").val()==3 || $("input[name='payment']:checked").val()==5){
+		if(confirm("确认款项已收妥？")){
+			$.post("/shop/tangshi/shoukuan",{id:"${orders.id!}",payment:$("input[name='payment']:checked").val()},function(data){
+				alert(data.msg);
+				if(data.success){
+					parent.location.reload(true);
+				}
+			});
+		}
+	}else if($("input[name='payment']:checked").val()==1){
+		window.location.href="/shop/tangshi/wx?id=${orders.id!}";
+	}else if($("input[name='payment']:checked").val()==2){
+		window.location.href="/shop/tangshi/alipay?id=${orders.id!}";
+	}else if($("input[name='payment']:checked").val()==0){
+		window.location.href="/shop/tangshi/account?id=${orders.id!}";
+	}
+}
+function parentRefresh(){
+	
+	parent.hideAlert();
+	parent.window.location.reload(true);
+}
+</script>

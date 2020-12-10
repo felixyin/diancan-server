@@ -1,0 +1,165 @@
+##tlayout("admin/layout.htm"){
+
+<div class="breadcrumbs">
+	<div class="col-xs-2 breadcrumbs_title">门店评价</div>
+	<div class="col-xs-10" style="text-align: right;">
+		<form action="/admin/comment/index" method="post" id="search_form">
+			<select style="height:35px;vertical-align: top;" name="bid">
+				<option value="">全部</option>
+				##for(_item in business_list!){
+					<option value="${_item.id!}">${_item.title!}</option>
+				##}
+			</select>
+			<select style="height:35px;vertical-align: top;" name="sid">
+				<option value="">全部</option>
+			</select>
+			<input type="text" placeholder="请输入搜索内容" name="content" value="${content!}" style="height: 35px;margin-left: 5px;" />
+			<button class="btn btn-sm" onclick="$('#search_form').submit()" type="button">确定</button>
+		</form>
+	</div>
+</div>
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="tabbable tabs-left">
+				<ul class="nav nav-tabs">
+					<li>
+						<a href="/admin/shop" style="padding: 15px 20px;">
+							<span style="margin-left: 5px;">门店管理</span>
+						</a>
+					</li>
+					<li class="active">
+						<a href="/admin/comment" style="padding: 15px 20px;">
+							<span style="margin-left: 5px;">门店评价</span>
+						</a>
+					</li>
+				</ul>
+				<div class="tab-content" style="min-height: 500px;">
+					<div class="tab-pane" style="display: block;">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="table-responsive">
+									<table class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr>
+												<th style="width: 40%">门店评价</th>
+												<th>商家</th>
+												<th>门店</th>
+												<th>会员</th>
+												<th>状态</th>
+												<th>创建时间</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											##for(_item in results.list!){
+											<tr>
+												<td>
+													##if(_item.img_list!=null && _item.img_list.~size!=0){
+														<div>
+															##for(_img in _item.img_list!){
+																<a href="${_img!}" target="_blank">
+																	<img src="${_img!}" style="height: 60px;padding: 0px 5px;" />
+																</a>
+															##}
+														</div>
+													##}
+													<div style="margin-top: 5px">${_item.content!}</div>
+												</td>
+												<td>${_item.business_title!}</td>
+												<td>${_item.shop_title!}</td>
+												<td>
+													<div><img src="${_item.user_img_url!}" style="width: 50px;" /></div>
+													<div style="margin-top: 5px;">${_item.user_name!}</div>
+												</td>
+												<td>
+													##if(_item.status == 1){
+														启用
+													##}else{
+														禁用
+													##}
+												</td>
+												<td>${_item.create_date!,dateFormat='yyyy-MM-dd HH:mm'}</td>
+												<td style="width:100px;">
+													<div class="btn-group">
+														<button class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
+															操作<span class="icon-caret-down icon-on-right"></span>
+														</button>
+														<ul class="dropdown-menu dropdown-info pull-right">
+															<li><a href="javascript:changeStatus(${_item.id!}, 9, '删除')">删除</a></li>
+														</ul>
+													</div>
+												</td>
+											</tr>
+											##}
+										</tbody>
+									</table>
+								</div>
+								##if(totalPage>1){
+									<div class="fenye">
+										<#_pagination page="${results!}" params="content,sid,bid" >
+											<ul id="Pagination"></ul>
+										</#_pagination>
+									</div>
+								##}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function(){
+	
+	$("select[name='bid']").val("${bid!}");
+	if($("select[name='bid']").val() !=null && $("select[name='bid']").val() != ""){
+		$.post("/admin/shop/json", {id:$("select[name='bid']").val()}, function(data){
+			var html ="<option value=''>全部</option>";
+			if(data.success){
+				$.each(data.list, function(index, array){
+					html+="<option value="+ array["id"] +">"+ array["title"] + "</option>";
+				});
+				$("select[name='sid']").html(html);
+				$("select[name='sid']").val("${sid!}");
+			}
+		});
+	}else{
+		var html ="<option value=''>全部</option>";
+		$("select[name='sid']").html(html);
+	}
+	$("select[name='bid']").change(function(){
+		changeShop();
+	});
+});
+function changeShop(){
+	
+	if($("select[name='bid']").val() !=null && $("select[name='bid']").val() != ""){
+		$.post("/admin/shop/json", {id:$("select[name='bid']").val()}, function(data){
+			var html ="<option value=''>全部</option>";
+			if(data.success){
+				$.each(data.list, function(index, array){
+					html+="<option value="+ array["id"] +">"+ array["title"] + "</option>";
+				});
+				$("select[name='sid']").html(html);
+			}
+		});
+	}else{
+		var html ="<option value=''>全部</option>";
+		$("select[name='sid']").html(html);
+	}
+}
+function changeStatus(id, status, msg){
+	
+	if(confirm("确定要" + msg + "该条记录吗？")){
+		$.post("/admin/comment/changeStatus",{id:id,status:status},function(data){
+			alert(data.msg);
+			if(data.success){
+				location.reload(true);
+			}
+		});
+	}
+}
+</script>
+##}

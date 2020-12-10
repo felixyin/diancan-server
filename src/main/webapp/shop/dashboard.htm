@@ -1,0 +1,462 @@
+##tlayout("shop/layout.htm"){
+
+<div class="breadcrumbs">
+	<div class="col-xs-12 breadcrumbs_title">数据统计</div>
+</div>
+<div class="page-content clearfix" style="padding-top: 0px;">
+	<div class="base_item price_top gonggao clearfix">
+		<div class="col-xs-3 item">
+			<div class="one_title">
+				<div class="top">今日订单</div>
+				<div class="bottom">￥${today_orders!0}</div>
+			</div>
+			<div class="one">堂食：<span>￥${today_tangshi_orders!0}</span></div>
+			<div class="one">预约：<span>￥${today_appointment_orders!0}</span></div>
+			<div class="one">外卖：<span>￥${today_waimai_orders!0}</span></div>
+		</div>
+		<div class="col-xs-3 item">
+			<div class="one_title">
+				<div class="top">昨日订单</div>
+				<div class="bottom">￥${yesterday_orders!0}</div>
+			</div>	
+			<div class="one">堂食：<span>￥${yesterday_tangshi_orders!0}</span></div>
+			<div class="one">预约：<span>￥${yesterday_appointment_orders!0}</span></div>
+			<div class="one">外卖：<span>￥${yesterday_waimai_orders!0}</span></div>
+		</div>
+		<div class="col-xs-3 item">
+			<div class="one_title">
+				<div class="top">近7日订单</div>
+				<div class="bottom">￥${seven_orders!0}</div>
+			</div>
+			<div class="one">堂食：<span>￥${seven_tangshi_orders!0}</span></div>
+			<div class="one">预约：<span>￥${seven_appointment_orders!0}</span></div>
+			<div class="one">外卖：<span>￥${seven_waimai_orders!0}</span></div>
+		</div>
+		<div class="col-xs-3 item">
+			<div class="one_title">
+				<div class="top">近30日订单</div>
+				<div class="bottom">￥${thirty_orders!0}</div>
+			</div>
+			<div class="one">堂食：<span>￥${thirty_tangshi_orders!0}</span></div>
+			<div class="one">预约：<span>￥${thirty_appointment_orders!0}</span></div>
+			<div class="one">外卖：<span>￥${thirty_waimai_orders!0}</span></div>
+		</div>
+	</div>
+	<div class="base_item gonggao">
+		<div class="base_title clearfix">
+			<span class="fl">常用功能</span>
+		</div>
+		<div class="base_body" style="padding: 0;">
+			<div class="zent-col zent-col-6" style="margin-top: 5px;">
+				<a class="wm-plugin__setting-item" href="/shop/tables">
+					<div class="icon icon-fenlei">桌</div>
+					<span>桌位管理</span>
+				</a>
+			</div>
+			<div class="zent-col zent-col-6" style="margin-top: 5px;">
+				<a class="wm-plugin__setting-item" href="/shop/order/shopping?id=${tables.id!}">
+					<div class="icon icon-pingjia">代</div>
+					<span>代客下单</span>
+				</a>
+			</div>
+			<div class="zent-col zent-col-6" style="margin-top: 5px;">
+				<a class="wm-plugin__setting-item" href="/shop/paidui">
+					<div class="icon icon-jian">排</div>
+					<span>排队取号</span>
+				</a>
+			</div>
+			<div class="zent-col zent-col-6" style="margin-top: 5px;">
+				<a class="wm-plugin__setting-item" href="/shop/yuyuezhuowei">
+					<div class="icon icon-yunfei">约</div>
+					<span>预约桌位</span>
+				</a>
+			</div>
+			<div class="zent-col zent-col-6" style="margin-top: 5px;">
+				<a class="wm-plugin__setting-item" href="/shop/tangshi">
+					<div class="icon icon-cai">堂</div>
+					<span>堂食订单</span>
+				</a>
+			</div>
+			<div class="zent-col zent-col-6" style="margin-top: 5px;">
+				<a class="wm-plugin__setting-item" href="/shop/takeaway">
+					<div class="icon icon-can">外</div>
+					<span>外卖订单</span>
+				</a>
+			</div>
+			<div class="zent-col zent-col-6" style="margin-top: 5px;">
+				<a class="wm-plugin__setting-item" href="/shop/appointment">
+					<div class="icon icon-quan">预</div>
+					<span>预约订单</span>
+				</a>
+			</div>
+			<div class="zent-col zent-col-6" style="margin-top: 5px;">
+				<a class="wm-plugin__setting-item" href="/shop/caiwu">
+					<div class="icon icon-ji">财</div>
+					<span>财务统计</span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="base_item gonggao">
+		<div class="base_title clearfix">
+			<span class="fl">待办事项</span>
+		</div>
+		<div class="base_body" style="padding: 0;">
+			<div class="zent-col zent-col-12 wm-plugin__group">
+				<div class="wm-plugin__todo-list">
+					<span class="bold">预约取号</span>
+					<a class="wm-plugin__todo-item clearfix" href="/shop/paidui?status=1">
+						<span class="wm-plugin__todo-item-action">${yuyuequhao!0} 个订单</span>
+						<div class="wm-plugin__todo-item-name">待叫号</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="base_body" style="padding: 0;">
+			<div class="zent-col zent-col-12 wm-plugin__group">
+				<div class="wm-plugin__todo-list">
+					<span class="bold">预约桌位</span>
+					<a class="wm-plugin__todo-item clearfix" href="/shop/yuyuezhuowei?status=2">
+						<span class="wm-plugin__todo-item-action">${yuyuezhuowei!0} 个订单</span>
+						<div class="wm-plugin__todo-item-name">待处理</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="base_body" style="padding: 0;">
+			<div class="zent-col zent-col-12 wm-plugin__group">
+				<div class="wm-plugin__todo-list">
+					<span class="bold">普通订单</span>
+					<a class="wm-plugin__todo-item clearfix" href="/shop/tangshi?status=0">
+						<span class="wm-plugin__todo-item-action">${tangshi_daifukuan!0} 个订单</span>
+						<div class="wm-plugin__todo-item-name">待付款</div>
+					</a>
+					<a class="wm-plugin__todo-item clearfix" href="/shop/tangshi?status=1">
+						<span class="wm-plugin__todo-item-action">${tangshi_yifukuan!0} 个订单</span>
+						<div class="wm-plugin__todo-item-name">已付款</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="base_body" style="padding: 0;">
+			<div class="zent-col zent-col-12 wm-plugin__group">
+				<div class="wm-plugin__todo-list">
+					<span class="bold">外卖订单</span>
+					<a class="wm-plugin__todo-item clearfix" href="/shop/takeaway?status=0">
+						<span class="wm-plugin__todo-item-action">${waimai_daifukuan!0} 个订单</span>
+						<div class="wm-plugin__todo-item-name">待付款</div>
+					</a>
+					<a class="wm-plugin__todo-item clearfix" href="/shop/takeaway?status=1">
+						<span class="wm-plugin__todo-item-action">${waimai_yifukuan!0} 个订单</span>
+						<div class="wm-plugin__todo-item-name">已付款</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="base_item gonggao">
+		<div class="base_title clearfix">
+			<span class="fl">门店装修</span>
+			<span class="fr">
+				<a class="store_bianji_btn_r" href="javascript:showAlert('/shop/system/msg')">编辑</a>
+			</span>
+		</div>
+		<div class="base_body r_store_kuai_warp" >
+			<div class="item_store_function">
+			    <span class="store_function">餐具费：${shop.tableware_price!}</span>
+			</div>
+			<div class="item_store_function">
+				##if(shop.takeaway_status == 1){
+					<span class="store_function">外卖：开启</span>
+				##}else{
+					<span class="store_function">外卖：关闭</span>
+				##}
+			</div>
+			##if(shop.takeaway_status == 1){
+				<div class="item_store_function">
+					##if(shop.takeaway_distribution_status == 1){
+						<span class="store_function">外卖配送：开启</span>
+					##}else{
+						<span class="store_function">外卖配送：关闭</span>
+					##}
+				</div>
+				<div class="item_store_function">
+					##if(shop.takeaway_own_status == 1){
+						<span class="store_function">外卖自提：开启</span>
+					##}else{
+						<span class="store_function">外卖自提：关闭</span>
+					##}
+				</div>
+			##}
+			<div class="item_store_function">
+			    <span class="store_function">配送费：${shop.takeaway_price!}</span>
+			</div>
+			<div class="item_store_function">
+			    <span class="store_function">起送金额：${shop.takeaway_moq!}</span>
+			</div>
+			<div class="item_store_function">
+			    <span class="store_function">配送范围：${shop.takeaway_distance!}km</span>
+			</div>
+		</div>
+	</div>
+	<div class="base_item price_top gonggao clearfix">
+		<div class="col-xs-12" style="margin-top: 50px;">
+			<div class="canvas_item" id="orders_1" style="height: 400px;"></div>
+		</div>
+	</div>
+	<div class="base_item price_top gonggao clearfix">
+		<div class="col-xs-12" style="margin-top: 50px;">
+			<div class="canvas_item" id="orders_2" style="height: 400px;"></div>
+		</div>
+	</div>
+</div>
+<script src="/www/script/echarts.min.js"></script>
+<script>
+var orders_chart_1 = echarts.init(document.getElementById('orders_1'));
+var orders_option_1 = {
+    title : {
+        text: '近30日订单统计图'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    toolbox: {
+        show: true,
+        showTitle: false,
+	    feature: {
+	        saveAsImage: {
+	            show: true
+	        }
+	    }
+    },
+    color: ['#eb874c','#ff6c72','#97ff7b','#5095f6','#d147f3','#f29d20'],
+    legend: {
+        data:['微信支付','余额支付','支付宝支付','现金支付','小程序支付','POS支付']
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            data : [
+					##for(_item in orders_list_1!){
+						##if(_itemLP.index!=orders_list_1.~size){
+							'${_item.create_date!}',
+						##}else{
+							'${_item.create_date!}'            		   
+						##}
+					##}
+                    ]
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'微信支付',
+            type:'bar',
+            data:[
+					##for(_item in orders_list_1!){
+						##if(_itemLP.index!=orders_list_1.~size){
+							'${_item.account_1!}',
+						##}else{
+							'${_item.account_1!}'            		   
+						##}
+					##}
+                  ]
+        },
+        {
+            name:'余额支付',
+            type:'bar',
+            data:[
+					##for(_item in orders_list_1!){
+						##if(_itemLP.index!=orders_list_1.~size){
+							'${_item.account_2!}',
+						##}else{
+							'${_item.account_2!}'            		   
+						##}
+					##}
+                  ]
+        },
+        {
+            name:'支付宝支付',
+            type:'bar',
+            data:[
+					##for(_item in orders_list_1!){
+						##if(_itemLP.index!=orders_list_1.~size){
+							'${_item.account_3!}',
+						##}else{
+							'${_item.account_3!}'    		   
+						##}
+					##}
+                  ]
+        },
+        {
+            name:'现金支付',
+            type:'bar',
+            data:[
+					##for(_item in orders_list_1!){
+						##if(_itemLP.index!=orders_list_1.~size){
+							'${_item.account_4!}',
+						##}else{
+							'${_item.account_4!}'    		   
+						##}
+					##}
+                  ]
+        },
+        {
+            name:'小程序支付',
+            type:'bar',
+            data:[
+					##for(_item in orders_list_1!){
+						##if(_itemLP.index!=orders_list_1.~size){
+							'${_item.account_5!}',
+						##}else{
+							'${_item.account_5!}'    		   
+						##}
+					##}
+                  ]
+        },
+        {
+            name:'POS支付',
+            type:'bar',
+            data:[
+					##for(_item in orders_list_1!){
+						##if(_itemLP.index!=orders_list_1.~size){
+							'${_item.account_6!}',
+						##}else{
+							'${_item.account_6!}'    		   
+						##}
+					##}
+                  ]
+        }
+    ]
+};
+orders_chart_1.setOption(orders_option_1);
+var orders_chart_2 = echarts.init(document.getElementById('orders_2'));
+var orders_option_2 = {
+    title : {
+        text: '近12月订单统计图'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    toolbox: {
+        show: true,
+        showTitle: false,
+	    feature: {
+	        saveAsImage: {
+	            show: true
+	        }
+	    }
+    },
+    color: ['#eb874c','#ff6c72','#97ff7b','#5095f6','#d147f3','#f29d20'],
+    legend: {
+        data:['微信支付','余额支付','支付宝支付','现金支付','小程序支付','POS支付']
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            data : [
+					##for(_item in orders_list_2!){
+						##if(_itemLP.index!=orders_list_2.~size){
+							'${_item.create_date!}',
+						##}else{
+							'${_item.create_date!}'            		   
+						##}
+					##}
+                    ]
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'微信支付',
+            type:'bar',
+            data:[
+					##for(_item in orders_list_2!){
+						##if(_itemLP.index!=orders_list_2.~size){
+							'${_item.account_1!}',
+						##}else{
+							'${_item.account_1!}'            		   
+						##}
+					##}
+                  ]
+        },
+        {
+            name:'余额支付',
+            type:'bar',
+            data:[
+					##for(_item in orders_list_2!){
+						##if(_itemLP.index!=orders_list_2.~size){
+							'${_item.account_2!}',
+						##}else{
+							'${_item.account_2!}'            		   
+						##}
+					##}
+                  ]
+        },
+        {
+            name:'支付宝支付',
+            type:'bar',
+            data:[
+					##for(_item in orders_list_2!){
+						##if(_itemLP.index!=orders_list_2.~size){
+							'${_item.account_3!}',
+						##}else{
+							'${_item.account_3!}'    		   
+						##}
+					##}
+                  ]
+        },
+        {
+            name:'现金支付',
+            type:'bar',
+            data:[
+					##for(_item in orders_list_2!){
+						##if(_itemLP.index!=orders_list_2.~size){
+							'${_item.account_4!}',
+						##}else{
+							'${_item.account_4!}'    		   
+						##}
+					##}
+                  ]
+        },
+        {
+            name:'小程序支付',
+            type:'bar',
+            data:[
+					##for(_item in orders_list_2!){
+						##if(_itemLP.index!=orders_list_2.~size){
+							'${_item.account_5!}',
+						##}else{
+							'${_item.account_5!}'    		   
+						##}
+					##}
+                  ]
+        },
+        {
+            name:'POS支付',
+            type:'bar',
+            data:[
+					##for(_item in orders_list_2!){
+						##if(_itemLP.index!=orders_list_2.~size){
+							'${_item.account_6!}',
+						##}else{
+							'${_item.account_6!}'    		   
+						##}
+					##}
+                  ]
+        }
+    ]
+};
+orders_chart_2.setOption(orders_option_2);
+</script>
+##}

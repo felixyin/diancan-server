@@ -1,0 +1,262 @@
+##tlayout("business/layout.htm"){
+
+<!-- 文件上传所需要css和js -->
+<link rel="stylesheet" href="/www/script/FileUpload/css/jquery.fileupload.css">
+<script type="text/javascript" src="/www/script/FileUpload/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="/www/script/FileUpload/vendor/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="/www/script/FileUpload/jquery.fileupload.js"></script>
+
+<div class="breadcrumbs">
+	<div class="col-xs-12 breadcrumbs_title">编辑菜品</div>
+</div>
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="base_item">
+				<form action="/business/dishes/update" method="post" class="form-horizontal" id="submit_form" style="margin-top: 50px;">
+					<div class="form-group">
+						<label class="col-xs-2 control-label"><span style="color: #f00">*</span>标题</label>
+						<div class="col-xs-10">
+							<input class="col-xs-6" type="text" name="title" value="${dishes.title!}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"><span style="color: #f00">*</span>类目</label>
+						<div class="col-xs-10 control-label">
+							<select name="dishes_type_id" class="col-xs-6">
+								##for(_item in dishes_type_list!){
+									<option value="${_item.id!}">${_item.title!}</option>
+								##}
+							</select>
+							<div class="col-xs-1">
+								<a class="btn btn-info btn-sm" href="javascript:showAlert('/business/dishes/type/add')">+添加</a>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"><span style="color: #f00">*</span>图片</label>
+						<div class="col-xs-10">
+							<a href="javascript:void(0);" class="file">选择图片(750 * 750)
+								<input type="file" class="autosize-transition form-control" name="image" id="uploadImg" style="overflow: hidden; word-wrap: break-word; resize: horizontal;border: 1px #ccc solid;" />
+							</a>
+							<div style="margin-top:10px;">
+								<img style="width: 100px;height:100px;" src="${dishes.img_url!}" id="img_url" />
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"></label>
+						<div class="col-xs-10" style="color: #999;">提示：建议图片尺寸750 * 750像素，图片大小不超过100KB</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"><span style="color: #f00">*</span>属性数量</label>
+						<div class="col-xs-10">
+							<select name="shuxing_number" class="col-xs-6" onchange="changeShuxing()">
+								<option value="1">1个属性</option>
+								<option value="2">2个属性</option>
+								<option value="3">3个属性</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"><span style="color: #f00">*</span>属性1</label>
+						<div class="col-xs-10">
+							<input class="col-xs-6 " type="text" name="shuxing_1" value="${dishes.shuxing_1!}" />
+						</div>
+					</div>
+					##if(dishes.shuxing_number == 1){
+						<div class="form-group" id="shuxing_2" style="display: none;">
+					##}else{
+						<div class="form-group" id="shuxing_2">
+					##}
+						<label class="col-xs-2 control-label"><span style="color: #f00">*</span>属性2</label>
+						<div class="col-xs-10">
+							<input class="col-xs-6" type="text" name="shuxing_2" value="${dishes.shuxing_2!}" />
+						</div>
+					</div>
+					##if(dishes.shuxing_number == 1 || dishes.shuxing_number == 2){
+						<div class="form-group" id="shuxing_3" style="display: none;">
+					##}else{
+						<div class="form-group" id="shuxing_3" >
+					##}
+						<label class="col-xs-2 control-label"><span style="color: #f00">*</span>属性3</label>
+						<div class="col-xs-10">
+							<input class="col-xs-6" type="text" name="shuxing_3" value="${dishes.shuxing_3!}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"><span style="color: #f00">*</span>菜品规格</label>
+						<div class="col-xs-10">
+							<div class="col-xs-12" style="margin: 0px;padding: 0px;margin-bottom: 5px;">
+								<span class="col-xs-1" style="width: 10px;margin-right: 5px;height: 20px;line-height: 20px;"></span>
+								<span class="col-xs-2" style="margin-left: -20px;" id="shuxing_1_title">${dishes.shuxing_1!}</span>
+								##if(dishes.shuxing_number == 1){
+									<span class="col-xs-2" style="margin-left: 5px; display: none;" id="shuxing_2_title">${dishes.shuxing_2!}</span>
+								##}else{
+									<span class="col-xs-2" style="margin-left: 5px;" id="shuxing_2_title">${dishes.shuxing_2!}</span>
+								##}
+								##if(dishes.shuxing_number == 1 || dishes.shuxing_number == 2){
+									<span class="col-xs-2" style="margin-left: 5px; display: none;" id="shuxing_3_title">${dishes.shuxing_3!}</span>
+								##}else{
+									<span class="col-xs-2" style="margin-left: 5px;" id="shuxing_3_title">${dishes.shuxing_3!}</span>
+								##}
+								<span class="col-xs-1" style="margin-left: 5px;"></span>
+							</div>
+							##for(_format in dishes_format_list!){
+								<div class="col-xs-12" style="margin: 0px;padding: 0px;margin-bottom: 5px;">
+									<input class="col-xs-1" type="checkbox" name="dishes_format" value="${_formatLP.index!}" checked="checked" style="width: 10px;margin-right: 5px;height: 20px;line-height: 20px;" />
+									<input class="col-xs-2 dishes_format_1" type="text" name="format_title_1_${_formatLP.index!}" value="${_format.title_1!}" />
+									##if(dishes.shuxing_number == 1){
+										<input class="col-xs-2 dishes_format_2" type="text" style="margin-left: 5px; display: none;" name="format_title_2_${_formatLP.index!}" value="${_format.title_2!}" />
+										<input class="col-xs-2 dishes_format_3" type="text" style="margin-left: 5px; display: none;" name="format_title_3_${_formatLP.index!}" value="${_format.title_3!}" />
+									##}else if(dishes.shuxing_number == 2){
+										<input class="col-xs-2 dishes_format_2" type="text" style="margin-left: 5px;" name="format_title_2_${_formatLP.index!}" value="${_format.title_2!}" />
+										<input class="col-xs-2 dishes_format_3" type="text" style="margin-left: 5px; display: none;" name="format_title_3_${_formatLP.index!}" value="${_format.title_3!}" />
+									##}else{
+										<input class="col-xs-2 dishes_format_2" type="text" style="margin-left: 5px;" name="format_title_2_${_formatLP.index!}" value="${_format.title_2!}" />
+										<input class="col-xs-2 dishes_format_3" type="text" style="margin-left: 5px;" name="format_title_3_${_formatLP.index!}" value="${_format.title_3!}" />
+									##}
+									<input class="col-xs-1" style="margin-left: 5px;" type="text" name="format_price_${_formatLP.index!}" placeholder="价格" value="${_format.price!}" />
+								</div>
+							##}
+							<div class="col-xs-12" style="margin: 0px;padding: 0px;margin-top: 10px;" onclick="addFormat(this)" idx="${dishes_format_list.~size + 1}">
+								<a href="javascript:void(0);" class="file">添加菜品规格</a>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"><span style="color: #f00">*</span>推荐</label>
+						<div class="col-xs-10">
+							##if(dishes.top==1){
+								<label><input type="radio" name="top" value="1" checked="checked" /> 是</label>
+								<label style="margin-left: 25px;"><input type="radio" name="top" value="0" /> 否</label>
+							##}else{
+								<label><input type="radio" name="top" value="1" /> 是</label>
+								<label style="margin-left: 25px;"><input type="radio" name="top" value="0" checked="checked" /> 否</label>
+							##}
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"><span style="color: #f00">*</span>热销</label>
+						<div class="col-xs-10">
+							##if(dishes.top==1){
+								<label><input type="radio" name="hot" value="1" checked="checked" /> 是</label>
+								<label style="margin-left: 25px;"><input type="radio" name="hot" value="0" /> 否</label>
+							##}else{
+								<label><input type="radio" name="hot" value="1" /> 是</label>
+								<label style="margin-left: 25px;"><input type="radio" name="hot" value="0" checked="checked" /> 否</label>
+							##}
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label">简短介绍</label>
+						<div class="col-xs-10">
+							<textarea class="col-xs-6" name="remark" rows="8">${dishes.remark!}</textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"></label>
+						<div class="col-xs-10">
+							<button class="btn btn-info" type="button" onclick="submitForm()"><i class="icon-ok bigger-110"></i>确定</button>
+							&nbsp; &nbsp; &nbsp;
+							<button class="btn" type="button" onclick="javascript:history.back(-1)"><i class="icon-undo bigger-110"></i>取消</button>
+						</div>
+					</div>
+					<input type="hidden" name="img_url" value="${dishes.img_url!}" />
+					<input type="hidden" name="id" value="${dishes.id!}" />
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function(){
+	
+	$("select[name='dishes_type_id']").val("${dishes.dishes_type_id!}");
+	$("select[name='shuxing_number']").val("${dishes.shuxing_number!}");
+});
+$(document).ready(function(){
+	
+	$("input[name='shuxing_1']").keyup(function(){
+		$("#shuxing_1_title").html($("input[name='shuxing_1']").val());
+	});
+	$("input[name='shuxing_2']").keyup(function(){
+		$("#shuxing_2_title").html($("input[name='shuxing_2']").val());
+	});
+	$("input[name='shuxing_3']").keyup(function(){
+		$("#shuxing_3_title").html($("input[name='shuxing_3']").val());
+	});
+});
+$('#uploadImg').fileupload({
+    url: '/business/uploadImg',
+    dataType: 'json',
+    done: function (e,data) { 
+    	var json = $.parseJSON(data.jqXHR.responseText); 
+    	if(json.success){
+    		$("#img_url").attr("src", json.img_url);
+    		$("#img_url").show();
+    		$("input[name='img_url']").val(json.img_url);
+        }else{
+        	alert(json.msg);
+        }
+    }
+});
+function changeShuxing(){
+	
+	if($("select[name='shuxing_number']").val() == 1){
+		$("#shuxing_2").hide();
+		$("#shuxing_3").hide();
+		$("#shuxing_2_title").hide();
+		$("#shuxing_3_title").hide();
+		$(".dishes_format_2").hide();
+		$(".dishes_format_3").hide();
+	}else if($("select[name='shuxing_number']").val() == 2){
+		$("#shuxing_3").hide();
+		$("#shuxing_3_title").hide();
+		$(".dishes_format_3").hide();
+		$("#shuxing_2").show();
+		$("#shuxing_2_title").show();
+		$(".dishes_format_2").show();
+	}else{
+		$("#shuxing_2").show();
+		$("#shuxing_3").show();
+		$("#shuxing_2_title").show();
+		$("#shuxing_3_title").show();
+		$(".dishes_format_2").show();
+		$(".dishes_format_3").show();
+	}
+}
+function submitForm(){
+	
+	$('#submit_form').ajaxSubmit({
+	    success: function(data){
+	    	alert(data.msg);
+	     	if(data.success){
+	     		window.location.href="/business/dishes";
+	     	}
+	    } 
+	 });
+}
+function addFormat(object){
+	
+	var html="";
+	html+="<div class='col-xs-12' style='margin: 0px;padding: 0px;margin-bottom: 5px;'>";
+		html+="<input class='col-xs-1' type='checkbox' name='dishes_format' value='" + $(object).attr("idx") + "' style='width: 10px;margin-right: 5px;height: 20px;line-height: 20px;' />";
+		html+="<input class='col-xs-2 dishes_format_1' type='text' name='format_title_1_" + $(object).attr("idx") + "' value='默认' />";
+		if($("select[name='shuxing_number']").val() == 1){
+			html+="<input class='col-xs-2 dishes_format_2' style='display: none; margin-left: 5px;' type='text' name='format_title_2_" + $(object).attr("idx") + "' value='默认' />";
+			html+="<input class='col-xs-2 dishes_format_3' style='display: none; margin-left: 5px;' type='text' name='format_title_3_" + $(object).attr("idx") + "' value='默认' />";
+		}else if($("select[name='shuxing_number']").val() == 2){
+			html+="<input class='col-xs-2 dishes_format_2' style='margin-left: 5px;' type='text' name='format_title_2_" + $(object).attr("idx") + "' value='默认' />";
+			html+="<input class='col-xs-2 dishes_format_3' style='display: none; margin-left: 5px;' type='text' name='format_title_3_" + $(object).attr("idx") + "' value='默认' />";
+		}else{
+			html+="<input class='col-xs-2 dishes_format_2' style='margin-left: 5px;' type='text' name='format_title_2_" + $(object).attr("idx") + "' value='默认' />";
+			html+="<input class='col-xs-2 dishes_format_3' style='margin-left: 5px;' type='text' name='format_title_3_" + $(object).attr("idx") + "' value='默认' />";
+		}
+		html+="<input class='col-xs-1' style='margin-left: 5px;' type='text' name='format_price_" + $(object).attr("idx") + "' placeholder='价格' />";
+	html+="</div>";
+	$(object).before(html);
+	$(object).attr("idx", $(object).attr("idx") * 1 + 1);
+}
+</script>
+##}

@@ -1,0 +1,80 @@
+﻿#数据库地址
+jdbcUrl = jdbc:mysql://qtrj.i234.me:3308/products_wukong?useUnicode=true&characterEncoding=UTF-8
+#数据库用户名
+user = root
+#数据库密码
+password = Ybkk1027
+
+#基础地址
+wxUrl = https://xdj.funforever.cn
+qqUrl = https://apis.map.qq.com
+
+#项目名称
+baseTitle = 悟空点餐小程序系统
+
+#商家证书目录
+license_dir = c:/license/wukongdiancan/
+
+#飞鹅云打印机：123456@qq.com/123456
+printerUserCode = 123456@qq.com
+printerUserPwd = 123456
+
+#阿里云OSS
+oss = 1
+#EndPoint（地域节点）
+ossEndpoint = https://oss-accelerate.aliyuncs.com
+#用户AccessKey Id
+ossAccessKeyId = 123456
+#用户Access Key Secret
+ossAccessKeySecret = 123456
+#Bucket名称
+ossBucket = 123456
+#Bucket 域名
+ossDomain = https://123456.oss-accelerate.aliyuncs.com
+
+#短信通道
+#https://dysms.console.aliyun.com/dysms.htm
+accessKeyId = 123456
+accessKeySecret = 123456
+signName = 123456
+#忘记密码：验证码${code}，您正在使用忘记密码功能，请妥善保管账户信息。
+templateCode = 123456
+#发送新密码：您新的登录密码${code}，请尽快登录网站更新密码。
+templatePwd = 123456
+
+#腾讯地图ak
+qqAk = M6BBZ-YBZ3S-LHLOU-6RUDQ-LEBYZ-TQBLO
+
+#微信公众号appid
+appid = 123456
+#微信公众号appsecret
+appsecret = 123456
+
+#微信商户id
+partner = 123456
+#微信商户key
+partnerkey = 123456
+
+#支付宝
+alipayAppId = 123456
+#支付宝应用私钥
+alipayAppPrivateKey = 123456
+#支付宝公钥
+alipayAppPublicKey = 123456
+#支付宝
+alipayStoreId = 123456
+
+#小程序发布
+componentToken = YJSbfExtmZUMAJx0sNDqTYvdVK67SgAQoBY10MqhGVA
+componentKey = YJSbfExtmZUMAJx0sNDqTYvdVK67SgAQoBY10MqhGVA
+componentAppid = wx248de0a2b87f2078
+componentAppsecret = ab52bb20746170c0ac7b04e1dcfc9910
+
+#服务商微信公众号
+fuwushang_appid = wx5756b54004c66d6f
+fuwushang_appsecret = 7c306a163852e5fb45c0710998ff1148
+
+#服务商微信商户
+fuwushang_partner = 1443873102
+fuwushang_partnerkey = zuC78mX3ckeIgr5F1mkJi7JQy7gBvrFI
+fuwushang_license = c://license/fuwushang_1443873102_apiclient_cert.p12
