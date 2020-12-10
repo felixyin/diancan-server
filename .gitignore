@@ -1,4 +1,5 @@
 /target/
 classes/
 .Settings/
+session_data/
 .DS_store
