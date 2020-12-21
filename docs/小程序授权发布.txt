@@ -1,0 +1,27 @@
+1.配置说明
+
+
+打开小程序目录 ‘/api/config.js’
+
+平台接口地址 baseUrl
+店铺scode(店铺识别用) sCode
+腾讯地图Key(用于显示店铺地址位置) keyMap
+
+
+2.目录介绍
+
+/api  项目配置文件和后端接口文件
+/image 图片文件
+/libs  第三方组件文件
+/pages 页面文件
+/style 组件样式文件
+/utils 公共方法文件
+api.js 入口文件
+app.json 全局配置文件
+app.wxss 全局样式文件
+project.config.json 小程序开发信息（开发工具自动生成的文件，不用处理）
+
+ext.json  配置第三方小程序测试信息
+extAppid 第三方测试小程序
+wxUrl 请求地址
+sCode 店铺专属 code
